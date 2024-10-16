@@ -4,7 +4,7 @@ export default function FooterMain() {
     <div>
       <footer className="bg-white dark:bg-gray-900">
         <div className="lg:w-[90%] w-[95%] mx-auto">
-          <div className="grid grid-cols-2 gap-8 py-6 lg:py-8 md:grid-cols-4">
+          <div className="grid sm:grid-cols-2 gap-8 py-6 lg:py-8 md:grid-cols-4">
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 About Company

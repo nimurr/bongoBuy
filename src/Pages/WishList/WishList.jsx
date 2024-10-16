@@ -32,7 +32,7 @@ export default function WishList() {
               <Table.Cell className="min-w-32">690 TK</Table.Cell>
               <Table.Cell>
                 {" "}
-                <Link to={'/products/:id'} className="py-1 px-4 bg-primary text-white rounded min-w-32">
+                <Link to={'/products/:id'} className="py-1 px-4 bg-primary text-white rounded min-w-28 text-center block">
                  Order Now
                 </Link>{" "}
               </Table.Cell>
