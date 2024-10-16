@@ -16,26 +16,31 @@ export default function HeroSection() {
           className=""
         >
           <img
+           loading="lazy"
             className="rounded-none" // No border radius
             src="https://mohasagor.com/public/storage/images/slider/t29nsnR5T4ZrOm9oPcKIzd5mx8FYaXg6u2jd2ycW.png"
             alt="..."
           />
           <img
+           loading="lazy"
             className="rounded-none" // No border radius
             src="https://mohasagor.com/public/storage/images/slider/XH4YGr8BIezjsrElDqPpsP7CSV4WkybRHvzjk0GI.png"
             alt="..."
           />
           <img
+           loading="lazy"
             className="rounded-none" // No border radius
             src="https://mohasagor.com/public/storage/images/slider/t29nsnR5T4ZrOm9oPcKIzd5mx8FYaXg6u2jd2ycW.png"
             alt="..."
           />
           <img
+           loading="lazy"
             className="rounded-none" // No border radius
             src="https://mohasagor.com/public/storage/images/slider/XH4YGr8BIezjsrElDqPpsP7CSV4WkybRHvzjk0GI.png"
             alt="..."
           />
           <img
+           loading="lazy"
             className="rounded-none" // No border radius
             src="https://mohasagor.com/public/storage/images/slider/t29nsnR5T4ZrOm9oPcKIzd5mx8FYaXg6u2jd2ycW.png"
             alt="..."

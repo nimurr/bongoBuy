@@ -39,49 +39,49 @@ export default function CatagoriesItem() {
         className="mySwiper"
       >
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>
         </SwiperSlide> 
         <SwiperSlide className='h-auto w-full bg-primary relative'>
-            <img src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
+            <img  loading="lazy" src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png" alt="" />
             <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
               T-shirt
             </span>

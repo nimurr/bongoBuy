@@ -31,6 +31,7 @@ export default function HomePage() {
               <div className="relative">
                 <Link to={"/products/:id"} className="">
                   <img
+                   loading="lazy"
                     className="w-full h-auto object-cover rounded-t-md"
                     src="https://mohasagor.com/public/storage/images/product_thumbnail_img/thumbnail_1728107065_4046.jpg"
                     alt="Product Thumbnail"

@@ -24,7 +24,7 @@ export default function FooterMain() {
                 Email : sopnerpesha24@gmail.com
               </p>
               <p className="dark:text-white text-sm mt-2">
-                Address : Mirpur-11 , Dhaka , Bangladesh
+                Address : Mirpur-11 , Dhaka-1216 , Bangladesh
               </p>
             </div>
             <div>
@@ -38,7 +38,7 @@ export default function FooterMain() {
                     to={
                       "https://www.facebook.com/profile.php?id=61564583527835"
                     }
-                    className="hover:underline"
+                    className="hover:underline hover:text-primary"
                   >
                     FaceBook
                   </Link>
@@ -49,14 +49,14 @@ export default function FooterMain() {
                     to={
                       "https://www.linkedin.com/company/pixomarge/?viewAsMember=true"
                     }
-                    className="hover:underline"
+                    className="hover:underline hover:text-primary"
                   >
                     Linkedin
                   </Link>
                 </li>
 
                 <li className="mb-4">
-                  <Link to={"/contact"} className="hover:underline">
+                  <Link to={"/contact"} className="hover:underline hover:text-primary">
                     Contact Us
                   </Link>
                 </li>
@@ -68,27 +68,27 @@ export default function FooterMain() {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link to={"/resume-build"} className="hover:underline">
+                  <Link to={"/resume-build"} className="hover:underline hover:text-primary">
                     Resume Build
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link to={"/interview"} className="hover:underline">
+                  <Link to={"/interview"} className="hover:underline hover:text-primary">
                     Interview
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link to={"/success"} className="hover:underline">
+                  <Link to={"/success"} className="hover:underline hover:text-primary">
                     Success Stories
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link to={"/blogs"} className="hover:underline">
+                  <Link to={"/blogs"} className="hover:underline hover:text-primary">
                     Blogs
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link to={"/contact"} className="hover:underline">
+                  <Link to={"/contact"} className="hover:underline hover:text-primary">
                     Contact Us
                   </Link>
                 </li>
@@ -99,7 +99,7 @@ export default function FooterMain() {
                 Download
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                <li className="mb-4">
+                <li className="mb-4 hover:text-primary">
                   <a href="#" className="hover:underline flex items-start gap-3">
                     Our Android App
                     <img className="w-8" src="https://res.cloudinary.com/nerob/image/upload/v1729072597/itg4lbho6byww0p73afv.png" alt="" />

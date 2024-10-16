@@ -1,4 +1,5 @@
 import { Table } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 export default function WishList() {
   return (
@@ -31,9 +32,9 @@ export default function WishList() {
               <Table.Cell className="min-w-32">690 TK</Table.Cell>
               <Table.Cell>
                 {" "}
-                <button className="py-1 px-4 bg-primary text-white rounded min-w-32">
-                  Add to Cart
-                </button>{" "}
+                <Link to={'/products/:id'} className="py-1 px-4 bg-primary text-white rounded min-w-32">
+                 Order Now
+                </Link>{" "}
               </Table.Cell>
               <Table.Cell>
                 {" "}
