@@ -5,9 +5,9 @@ import { MdEmail } from "react-icons/md";
 export default function ContactUs() {
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto">
-      <h2 className="text-center font-semibold my-10 text-xl text-tColor">
-        Contact us
-      </h2>
+      <div className="relative bg-cover bg-center bg-[url('https://static.vecteezy.com/system/resources/previews/017/165/756/non_2x/transparent-background-abstract-background-free-png.png')] sm:h-[150px] flex items-center justify-center h-[20vh]">
+        <h1 className="text-white text-4xl font-bold">Contact Us</h1>
+      </div>
       <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-5 my-10">
         <div className="p-5 border rounded-md bg-white">
           <h2 className="text-xl font-semibold flex items-center gap-2">
@@ -35,12 +35,36 @@ export default function ContactUs() {
       <div className="mb-10">
         <form className="md:w-[60%] w-full mx-auto" action="">
           <div className="flex justify-between gap-2 mb-2">
-            <input className="w-full border-[#eee] border-2 rounded-sm" type="text" name="name" placeholder="Your Name" />
-            <input className="w-full border-[#eee] border-2 rounded-sm" type="email" name="email" placeholder="Your Email" />
+            <input
+              className="w-full border-[#eee] border-2 rounded-sm"
+              type="text"
+              name="name"
+              placeholder="Your Name"
+            />
+            <input
+              className="w-full border-[#eee] border-2 rounded-sm"
+              type="email"
+              name="email"
+              placeholder="Your Email"
+            />
           </div>
-          <input className="w-full mb-2 border-[#eee] border-2 rounded-sm" type="number" name="phone" placeholder="Your Phone" />
-          <textarea className="w-full mb-2 border-[#eee] border-2 rounded-sm" name="message" placeholder="Your Message" id=""></textarea>
-          <input className="w-full p-2 rounded-sm text-white bg-primary inline-block" type="submit" value="Submit" />
+          <input
+            className="w-full mb-2 border-[#eee] border-2 rounded-sm"
+            type="number"
+            name="phone"
+            placeholder="Your Phone"
+          />
+          <textarea
+            className="w-full mb-2 border-[#eee] border-2 rounded-sm"
+            name="message"
+            placeholder="Your Message"
+            id=""
+          ></textarea>
+          <input
+            className="w-full p-2 rounded-sm text-white bg-primary inline-block"
+            type="submit"
+            value="Submit"
+          />
         </form>
       </div>
     </div>

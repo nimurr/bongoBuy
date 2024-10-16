@@ -1,8 +1,55 @@
+import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { TbMessageCircleStar } from "react-icons/tb";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function Profile() {
   return (
-    <div>
-        <h2>Profile</h2>
+    <div className="lg:w-[90%] w-[95%] mx-auto my-10 grid grid-cols-4 gap-10">
+      <div className="col-span-1 bg-gray-50 rounded-sm py-20 ">
+        <ul className="flex flex-col gap-2 capitalize">
+          <NavLink
+            to="/profile/profiledetails"
+            className={({ isActive }) =>
+              `flex items-center text-xl font-semibold py-2 px-5 ${isActive ? 'text-white bg-primary' : ''}`
+            }
+          >
+            <CgProfile className="inline mr-2 text-2xl" />
+            My Profile
+          </NavLink>
+          <NavLink
+            to="/profile/current-order"
+            className={({ isActive }) =>
+              `flex items-center text-xl font-semibold py-2 px-5 ${isActive ? 'text-white bg-primary' : ''}`
+            }
+          >
+            <BsCartPlusFill className="inline mr-2 text-2xl" />
+            Current Order
+          </NavLink>
+          <NavLink
+            to="/profile/previous-order"
+            className={({ isActive }) =>
+              `flex items-center text-xl font-semibold py-2 px-5 ${isActive ? 'text-white bg-primary' : ''}`
+            }
+          >
+            <BsCartCheckFill className="inline mr-2 text-2xl" />
+            Previous Order
+          </NavLink>
+          <NavLink
+            to="/profile/my-reviews"
+            className={({ isActive }) =>
+              `flex items-center text-xl font-semibold py-2 px-5 ${isActive ? 'text-white bg-primary' : ''}`
+            }
+          >
+            <TbMessageCircleStar className="inline mr-2 text-2xl" />
+            My Reviews
+          </NavLink>
+        </ul>
+      </div>
+
+      <div className="col-span-3 bg-gray-50 p-10">
+        <Outlet />
+      </div>
     </div>
-  )
+  );
 }

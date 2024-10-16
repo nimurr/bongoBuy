@@ -15,6 +15,10 @@ import AddToCart from "./Pages/AddToCart/AddToCart.jsx";
 import Login from "./Pages/Auth/Login.jsx";
 import Register from "./Pages/Auth/Register.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
+import ProfileDetails from "./Components/Profile/ProfileDetails.jsx";
+import CurrentOrder from "./Components/Profile/CurrentOrder.jsx";
+import PreviousOrder from "./Components/Profile/PreviousOrder.jsx";
+import MyReviews from "./Components/Profile/MyReviews.jsx";
  
 
 const router = createBrowserRouter([
@@ -54,6 +58,28 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile></Profile>,
+        children:[
+          {
+            path:'/profile/profiledetails',
+            element:<ProfileDetails></ProfileDetails>
+          },
+          {
+            path:'/profile',
+            element:<ErrorPage></ErrorPage>
+          },
+          {
+            path:'/profile/current-order',
+            element:<CurrentOrder></CurrentOrder>
+          },
+          {
+            path:'/profile/previous-order',
+            element:<PreviousOrder></PreviousOrder>
+          },
+          {
+            path:'/profile/my-reviews',
+            element:<MyReviews></MyReviews>
+          },
+        ]
       },
       {
         path: "/login",
