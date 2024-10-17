@@ -206,6 +206,7 @@ export default function ProductsDetails() {
             </h3>
 
             <div className="flex justify-start items-center gap-5 my-5">
+
               <div className="flex items-center space-x-4 border-gray-300 border-2">
                 <button
                   onClick={handleDecrease}
@@ -223,9 +224,10 @@ export default function ProductsDetails() {
                   <FaPlus />
                 </button>
               </div>
-              <button className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2">
+              
+              <Link to={'/orders/:id'} className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2">
                 Order Now <CiShoppingCart className="text-xl font-bold" />
-              </button>
+              </Link>
             </div>
             <div className="flex items-center gap-5 ">
               <button className="py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2">

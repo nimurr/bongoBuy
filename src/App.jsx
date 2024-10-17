@@ -90,7 +90,11 @@ function App() {
           </span>
           <div className="block bg-primary px-4 text-white font-semibold">Cart</div>
         </div>
+        <div className="w-6 h-6 flex justify-center items-center bg-primary rounded-full text-white text-xs  absolute -top-2 -left-2">
+          1
+        </div>
       </div>
+
     </div>
   );
 }

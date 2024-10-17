@@ -19,6 +19,7 @@ import ProfileDetails from "./Components/Profile/ProfileDetails.jsx";
 import CurrentOrder from "./Components/Profile/CurrentOrder.jsx";
 import PreviousOrder from "./Components/Profile/PreviousOrder.jsx";
 import MyReviews from "./Components/Profile/MyReviews.jsx";
+import OrderInfo from './Pages/Orders/OrderInfo';
  
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductsDetails></ProductsDetails>,
+      },
+      {
+        path: "/orders/:id",
+        element: <OrderInfo></OrderInfo>,
       },
       {
         path: "/wishlist",
