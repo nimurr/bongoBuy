@@ -1,6 +1,6 @@
 export default function ProfileDetails() {
   return (
-    <div className=" grid grid-cols-2 gap-5">
+    <div className=" grid lg:grid-cols-2 gap-5">
       <div  className=" p-5 rounded-md bg-gray-200">
         <h2 className=" text-2xl text-center font-semibold mb-5 uppercase">Information</h2>
         <p>

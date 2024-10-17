@@ -11,9 +11,9 @@ export default function HeaderTop() {
         </div>
         <div>
           <ul className="flex sm:justify-between justify-center gap-5 text-xs items-center font-bold ">
-            <Link className="flex items-center gap-1" to={"/"}>
+            {/* <Link className="flex items-center gap-1" to={"/"}>
               <FaLocationDot className="sm:text-lg text-primary" /> Order Tracking{" "}
-            </Link>
+            </Link> */}
             <Link className="flex items-center gap-1" to={"/about-us"}>
               <FaInfo className="sm:text-lg text-primary" /> About
             </Link>

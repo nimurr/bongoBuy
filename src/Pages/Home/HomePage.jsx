@@ -18,7 +18,7 @@ export default function HomePage() {
       <div key={idx} className="my-10">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-xl font-semibold text-tColor">TRACKSUIT {++idx}</h2>
-          <button className="bg-primary px-5 py-1 text-white rounded-md flex items-center gap-2">View All <FaHandPointRight /></button>
+          <Link to={'/categories/:id'} className="bg-primary px-5 py-1 text-white rounded-md flex items-center gap-2">View All <FaHandPointRight /></Link>
         </div>
         <hr className="h-[1px] bg-gray-300 border-none" />
         <br />

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function CurrentOrder() {
   return (
-    <div>
+    <div className="lg:p-0 p-5">
       <h2 className=" text-xl font-bold text-primary">Current Order</h2>
       <div className="overflow-x-auto my-10">
         <Table className="dark:bg-white">
