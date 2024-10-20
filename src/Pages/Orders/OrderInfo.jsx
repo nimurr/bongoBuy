@@ -6,7 +6,7 @@ export default function OrderInfo() {
       <div className=" flex items-center justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-8 w-full bg-white rounded-md shadow-lg">
           {/* Order Form Section */}
-          <div className="p-6">
+          <div className="md:p-6 p-4">
             <h2 className="text-2xl font-bold mb-6 text-gray-700">
               Please Order Now
             </h2>
@@ -63,7 +63,7 @@ export default function OrderInfo() {
               <div className="text-center">
                 <button
                   type="submit"
-                  className="w-full px-6 py-3 bg-primary text-white rounded-md hover:bg-[#0eaf3e] focus:outline-none"
+                  className="w-full px-6 py-2 bg-primary text-white rounded-md hover:bg-[#0eaf3e] focus:outline-none"
                 >
                   Order Submit
                 </button>
@@ -72,7 +72,7 @@ export default function OrderInfo() {
           </div>
 
           {/* Order Summary Section */}
-          <div className="p-6">
+          <div className="md:p-6 p-4">
             <h2 className="text-2xl font-bold mb-6 text-gray-700">
               Order Summary
             </h2>
@@ -93,16 +93,13 @@ export default function OrderInfo() {
                   <th className="pb-3 text-sm font-medium text-gray-600">
                     Total Price
                   </th>
-                  <th className="pb-3 text-sm font-medium text-gray-600">
-                    Action
-                  </th>
                 </tr>
               </thead>
               <tbody className="text-xs">
                 <tr className="border-t-2  border-b-2">
                   <td className="py-3 flex items-center gap-2">
                     <img
-                      src="https://via.placeholder.com/50" // Placeholder image
+                      src="https://mohasagor.com/public/storage/images/products/product_1723892877_1506.jpg" // Placeholder image
                       alt="Product"
                       className="w-12 h-12 object-cover rounded-md"
                     />
@@ -110,12 +107,11 @@ export default function OrderInfo() {
                       Men{`'`}s Camo Design Winter Set
                     </span>
                   </td>
-                  <td className="text-center">
+                  <td>
                     2
                   </td>
                   <td className="p-2">850 TK</td>
                   <td className="p-2">850 TK</td>
-                  <td className="p-2">btn</td>
                 </tr>
               </tbody>
             </table>

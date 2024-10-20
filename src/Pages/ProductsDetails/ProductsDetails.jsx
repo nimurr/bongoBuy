@@ -111,6 +111,21 @@ export default function ProductsDetails() {
             </Link>
           </div>
           <div>
+            <h2 className="flex items-center gap-2">
+              <span className="font-semibold ">Reviews : </span>
+              <div className="">
+                <FaStar className="inline text-orange-500" />
+                <FaStar className="inline text-orange-500" />
+                <FaStar className="inline text-orange-500" />
+                <FaStar className="inline text-orange-500" />
+                <FaStar className="inline text-orange-500" />
+              </div>
+              <div>
+                4.90 (<span className="text-xs">145</span>)
+              </div>
+            </h2>
+          </div>
+          <div>
             <h3 className="my-5">
               <span className="font-semibold">Code:</span> 1242
             </h3>
@@ -206,7 +221,6 @@ export default function ProductsDetails() {
             </h3>
 
             <div className="flex justify-start items-center gap-5 my-5">
-
               <div className="flex items-center space-x-4 border-gray-300 border-2">
                 <button
                   onClick={handleDecrease}
@@ -224,8 +238,11 @@ export default function ProductsDetails() {
                   <FaPlus />
                 </button>
               </div>
-              
-              <Link to={'/orders/:id'} className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2">
+
+              <Link
+                to={"/orders/:id"}
+                className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2"
+              >
                 Order Now <CiShoppingCart className="text-xl font-bold" />
               </Link>
             </div>
@@ -428,7 +445,7 @@ export default function ProductsDetails() {
             <Modal.Body className="dark:bg-white ">
               <div className="space-y-6">
                 <span className="font-semibold flex items-center gap-2">
-                  Rating <FaStar className="text-orange-500" /> 
+                  Rating <FaStar className="text-orange-500" />
                 </span>
                 <div className="flex gap-2">
                   <label

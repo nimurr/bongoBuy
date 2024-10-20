@@ -7,7 +7,6 @@ export default function Privetroute({ children }) {
   const { user, loading , logOut } = useContext(AuthContext);
 
 
-
   if (user) {
     return children;
   }

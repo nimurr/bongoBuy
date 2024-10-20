@@ -218,6 +218,7 @@ export default function FooterMain() {
           </div>
         </div>
       </footer>
+      <br className="md:hidden"/>
     </div>
   );
 }

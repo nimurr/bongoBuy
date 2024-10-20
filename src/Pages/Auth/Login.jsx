@@ -1,6 +1,26 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function Login() {
+  const { loginWithGoogle, user } = useContext(AuthContext);
+
+  const handleLoginWithEmailPass = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const formData = { password, email };
+
+    console.log(formData);
+  };
+
+  const handleLoginGoogle = () => {
+    console.log("handleLoginGoogle");
+    loginWithGoogle();
+  };
+  console.log(user);
+
   return (
     <div className="lg:w-[60%] w-[95%] mx-auto grid grid-cols-2 items-center gap-10 my-10 bg-white ">
       <div className="">
@@ -10,28 +30,30 @@ export default function Login() {
           alt=""
         />
       </div>
-      <div className="bg-primary  h-full flex items-center justify-center border"> 
-        <form action="" className=" p-5 ">
+      <div className="bg-primary  h-full flex items-center justify-center border">
+        <form onSubmit={handleLoginWithEmailPass} action="" className=" p-5 ">
           <input
             className="w-full mb-5 border-2 border-gray-200 rounded outline-none"
             type="email"
             name="email"
             id=""
-            placeholder="Your Name"
+            placeholder="Your Email"
+            required
           />
           <input
             className="w-full mb-5 border-2 border-gray-200 rounded outline-none"
             type="password"
             name="password"
+            required
             id=""
             placeholder="Your Password"
           />
           <input
             className="px-10 py-2  bg-blue-600 cursor-pointer w-full text-white font-semibold rounded"
             type="submit"
-            value="Submit"
+            value="Login"
           />
-          <div className="my-3">
+          <div className="my-3 text-white">
             <p>
               Are You new bongobuy.com ? please{" "}
               <Link className="text-blue-600 font-semibold" to={"/register"}>
@@ -44,7 +66,11 @@ export default function Login() {
             or{" "}
             <span className="h-[1px] bg-gray-300 inline-block w-[45%]"></span>
           </div>
-          <button className="p-2 w-full bg-gray-200 flex items-center gap-2 justify-center">
+          <button
+            type="button"
+            onClick={handleLoginGoogle}
+            className="p-2 w-full bg-gray-200 flex items-center gap-2 justify-center"
+          >
             Login With Google{" "}
             <img
               className="w-6"

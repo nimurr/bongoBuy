@@ -83,7 +83,7 @@ function App() {
         </span>
       </Link>
 
-      <div className="fixed md:block hidden right-0 top-[45%] bg-white shadow-lg cursor-pointer z-[9999]">
+      <Link to={'/add-to-cart'} className="fixed md:block hidden right-0 top-[45%] bg-white shadow-lg cursor-pointer z-[9999]">
         <div>
           <span className="flex justify-center items-center p-3">
             <FaShoppingCart className="text-2xl text-primary" />
@@ -93,7 +93,7 @@ function App() {
         <div className="w-6 h-6 flex justify-center items-center bg-primary rounded-full text-white text-xs  absolute -top-2 -left-2">
           1
         </div>
-      </div>
+      </Link>
 
     </div>
   );
