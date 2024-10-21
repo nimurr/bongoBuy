@@ -1,10 +1,59 @@
+import { useContext, useEffect, useState } from "react";
 import { FaPhone } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function ContactUs() {
+  const { user } = useContext(AuthContext);
+  const user2 = user;
+  
+  const [settingInfo , setSettingInfo] = useState([])
+
+  useEffect(()=> {
+    axios.get('http://localhost:5000/site-settings')
+    .then( res => {
+      if(res?.data) setSettingInfo(res?.data)
+    })
+  },[])
+
+  console.log(settingInfo[0]?.email)
+
+
+  const handleCustomerMessage = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    const message = form.message.value;
+    const user = user2?.email ? user2?.email : "";
+    const formData = { name, email, phone, message, user };
+    console.log(formData);
+    await axios
+      .post("http://localhost:5000/customer-message", formData)
+      .then((res) => {
+        if (res?.data) {
+          toast.success("Message Send Successfully!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+        form.reset()
+      });
+  };
+
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto">
+       <ToastContainer />
       <div className="relative bg-cover bg-center bg-[url('https://static.vecteezy.com/system/resources/previews/017/165/756/non_2x/transparent-background-abstract-background-free-png.png')] sm:h-[150px] flex items-center justify-center h-[20vh]">
         <h1 className="text-white text-4xl font-bold">Contact Us</h1>
       </div>
@@ -14,26 +63,29 @@ export default function ContactUs() {
             <FaMapLocationDot /> Location
           </h2>
           <p className="mt-2">
-            Office: House: 02, Lane: 11, Block: A, Benarashi Polly, Section-10,
-            Mirpur, Dhaka. <br /> E-mail: support@mohasagor.com <br /> Hot Line:
-            09636-203040/01635-212121
+            Office: House: {settingInfo[0]?.fullAddress} <br /> E-mail: {settingInfo[0]?.email} <br /> Hot Line:
+            {settingInfo[0]?.phone}
           </p>
         </div>
         <div className="p-5 border rounded-md bg-white">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <FaPhone className="rotate-90" /> Phone
           </h2>
-          <p className="mt-2"> Hot Line: 09636-203040/01635-212121</p>
+          <p className="mt-2"> Hot Line: {settingInfo[0]?.phone}</p>
         </div>
         <div className="p-5 border rounded-md bg-white">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <MdEmail /> Email
           </h2>
-          <p className="mt-2"> E-mail: support@mohasagor.com</p>
+          <p className="mt-2"> E-mail:  {settingInfo[0]?.email}</p>
         </div>
       </div>
       <div className="mb-10">
-        <form className="md:w-[60%] w-full mx-auto" action="">
+        <form
+          onSubmit={handleCustomerMessage}
+          className="md:w-[60%] w-full mx-auto"
+          action=""
+        >
           <div className="flex justify-between gap-2 mb-2">
             <input
               className="w-full border-[#eee] border-2 rounded-sm"

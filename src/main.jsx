@@ -65,12 +65,12 @@ const router = createBrowserRouter([
         element: <Profile></Profile>,
         children:[
           {
-            path:'/profile/profiledetails',
+            path:'/profile',
             element:<ProfileDetails></ProfileDetails>
           },
           {
-            path:'/profile',
-            element:<ErrorPage></ErrorPage>
+            path:'/profile/profiledetails',
+            element:<ProfileDetails></ProfileDetails>
           },
           {
             path:'/profile/current-order',

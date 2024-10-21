@@ -2,6 +2,8 @@ import { Modal } from "flowbite-react";
 import { useState } from "react";
 import { BiSolidLike } from "react-icons/bi";
 import { CiHeart, CiShoppingCart } from "react-icons/ci";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   FaAngleRight,
   FaCartArrowDown,
@@ -15,9 +17,53 @@ import {
 import { FaTruckFast } from "react-icons/fa6";
 import { IoHomeSharp, IoLogoWhatsapp } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function ProductsDetails() {
+  const { id } = useParams();
+
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  );
+  // Handle favorite click
+  const handleFavoriteClick = () => {
+    let updatedFavorites = [...favorites];
+
+    // Check if the product ID is already in favorites
+    if (updatedFavorites.includes(id)) {
+      updatedFavorites = updatedFavorites.filter((id) => id !== id); // Remove from favorites
+      toast.success("Removed from wishlist!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      updatedFavorites.push(id); // Add to favorites
+      toast.success("Added to wishlist!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+
+    // Save the updated favorites list to localStorage
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    // Update state
+    setFavorites(updatedFavorites);
+
+    window.location.reload(true);
+  };
   // ================ selected Size ============
   const [selectedSize, setSelectedSize] = useState("");
   const handleSizeChange = (event) => {
@@ -56,12 +102,100 @@ export default function ProductsDetails() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
   //=========== review modal =============
   const [openModal, setOpenModal] = useState(false);
 
+  const [review, setReview] = useState("");
+  const handleReview = (event) => {
+    setReview(event.target.value);
+  };
+
+  const handlePostReview = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const userName = form.userName.value;
+    const message = form.message.value;
+    const formData = { productId: id, review, userName, message };
+    console.log(formData);
+
+    await axios
+      .post("http://localhost:5000/allReviews", formData)
+      .then((res) => {
+        if (!res) {
+          return toast.error(" Review Submit Error !!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } else {
+          toast.success(" Review Submit Successful !!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      });
+
+    form.reset();
+  };
+
+  // Function to handle adding the item to localStorage
+  const handleAddToCart = (product) => {
+    // Retrieve existing cart items from localStorage
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Check if the item is already in the cart
+    const itemExists = cart.some((item) => item.id === product.id); // Assuming product has a unique id property
+
+    if (itemExists) { 
+      toast.error("This item is already in your cart!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return; // Exit the function if the item already exists
+    }
+
+    // Add the new product to the cart
+    const updatedCart = [...cart, product];
+
+    // Save the updated cart back to localStorage
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    toast.success("Item added to cart!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+    window.location.reload()
+
+  };
+
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
+      <ToastContainer />
       <div className=" grid xl:grid-cols-3 md:grid-cols-2 gap-5">
         {/* Products Images  */}
         <div>
@@ -247,11 +381,22 @@ export default function ProductsDetails() {
               </Link>
             </div>
             <div className="flex items-center gap-5 ">
-              <button className="py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2">
+              <button
+                onClick={() => handleAddToCart(id)}
+                className="py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2"
+              >
                 <FaCartArrowDown className="text-xl font-bold" /> Add To Cart
               </button>
-              <button className="py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2">
-                <CiHeart className="text-xl font-bold" /> Add To Wishlist
+              <button
+                onClick={handleFavoriteClick}
+                className={`py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2 ${
+                  favorites.includes(id) ? "text-red-500" : ""
+                }`}
+              >
+                <CiHeart
+                  className={`cursor-pointer text-2xl hover:scale-105 `}
+                />{" "}
+                Add To Wishlist
               </button>
             </div>
           </div>
@@ -443,119 +588,119 @@ export default function ProductsDetails() {
           >
             <Modal.Header className="dark:bg-white dark:text-black"></Modal.Header>
             <Modal.Body className="dark:bg-white ">
-              <div className="space-y-6">
-                <span className="font-semibold flex items-center gap-2">
-                  Rating <FaStar className="text-orange-500" />
-                </span>
-                <div className="flex gap-2">
-                  <label
-                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                      selectedSize === "M"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      value="M"
-                      checked={selectedSize === "M"}
-                      onChange={handleSizeChange}
-                      className="hidden"
-                    />
-                    5
-                  </label>
+              <form onSubmit={handlePostReview} action="">
+                <div className="space-y-6">
+                  <span className="font-semibold flex items-center gap-2">
+                    Rating <FaStar className="text-orange-500" />
+                  </span>
+                  <div className="flex gap-2">
+                    <label
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
+                        review === "5"
+                          ? "bg-primary text-white border-primary"
+                          : "border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        value="5"
+                        checked={review === "5"}
+                        onChange={handleReview}
+                        className="hidden"
+                      />
+                      5
+                    </label>
 
-                  <label
-                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                      selectedSize === "L"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      value="L"
-                      checked={selectedSize === "L"}
-                      onChange={handleSizeChange}
-                      className="hidden"
-                    />
-                    4
-                  </label>
-                  <label
-                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                      selectedSize === "XL"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      value="XL"
-                      checked={selectedSize === "XL"}
-                      onChange={handleSizeChange}
-                      className="hidden"
-                    />
-                    3
-                  </label>
-                  <label
-                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                      selectedSize === "2XL"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      value="2XL"
-                      checked={selectedSize === "2XL"}
-                      onChange={handleSizeChange}
-                      className="hidden"
-                    />
-                    2
-                  </label>
-                  <label
-                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                      selectedSize === "3XL"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      value="3XL"
-                      checked={selectedSize === "3XL"}
-                      onChange={handleSizeChange}
-                      className="hidden"
-                    />
-                    1
-                  </label>
+                    <label
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
+                        review === "4"
+                          ? "bg-primary text-white border-primary"
+                          : "border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        value="4"
+                        checked={review === "4"}
+                        onChange={handleReview}
+                        className="hidden"
+                      />
+                      4
+                    </label>
+                    <label
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
+                        review === "3"
+                          ? "bg-primary text-white border-primary"
+                          : "border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        value="3"
+                        checked={review === "3"}
+                        onChange={handleReview}
+                        className="hidden"
+                      />
+                      3
+                    </label>
+                    <label
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
+                        review === "2"
+                          ? "bg-primary text-white border-primary"
+                          : "border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        value="2"
+                        checked={review === "2"}
+                        onChange={handleReview}
+                        className="hidden"
+                      />
+                      2
+                    </label>
+                    <label
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
+                        review === "1"
+                          ? "bg-primary text-white border-primary"
+                          : "border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        value="1"
+                        checked={review === "1"}
+                        onChange={handleReview}
+                        className="hidden"
+                      />
+                      1
+                    </label>
+                  </div>
+                  <input
+                    className="w-full border-2 border-gray-300"
+                    type="text"
+                    name="userName"
+                    placeholder="Name"
+                    id=""
+                    required
+                  />
+                  <textarea
+                    className="w-full border-2 border-gray-300"
+                    name="message"
+                    placeholder="Your Message"
+                    id=""
+                    required
+                  ></textarea>
                 </div>
-                <input
-                  className="w-full border-2 border-gray-300"
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  id=""
-                  required
-                />
-                <textarea
-                  className="w-full border-2 border-gray-300"
-                  name="message"
-                  placeholder="Your Message"
-                  id=""
-                  required
-                ></textarea>
-              </div>
+                <button
+                  type="submit"
+                  className="py-2 px-5 mt-3 text-white rounded-sm bg-primary"
+                  color="gray"
+                >
+                  Submit Review
+                </button>
+              </form>
             </Modal.Body>
-            <Modal.Footer className="dark:bg-white ">
-              <button
-                className="py-2 px-5 text-white rounded-sm bg-primary"
-                color="gray"
-                onClick={() => setOpenModal(false)}
-              >
-                Submit Review
-              </button>
-            </Modal.Footer>
           </Modal>
         </div>
       </div>

@@ -1,8 +1,52 @@
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function OrderInfo() {
 
+
+  const handleOrderSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const fullName = form.fullName.value;
+    const number = form.number.value;
+    const deliveryArea = form.deliveryArea.value;
+    const fullAddress = form.fullAddress.value;
+    const productId = 'defgdfg455df4g564fg54df45g45dfg';
+    const productPrice = 1560;
+    const productQuantity = 2;
+    const productSize = 'M'; 
+    const formData = {fullName , number , deliveryArea , fullAddress , productQuantity , productId , productPrice , productSize}
+ 
+
+    await axios.post('http://localhost:5000/customer-orders' , formData)
+    .then(res =>  {
+      
+      if (res?.data) {
+        toast.success("Order Submit Successfully !", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        
+        form.reset();
+
+      } 
+    })
+
+  };
+
+
+
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
+       <ToastContainer />
       <div className=" flex items-center justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-8 w-full bg-white rounded-md shadow-lg">
           {/* Order Form Section */}
@@ -10,7 +54,7 @@ export default function OrderInfo() {
             <h2 className="text-2xl font-bold mb-6 text-gray-700">
               Please Order Now
             </h2>
-            <form>
+            <form onSubmit={handleOrderSubmit}>
               {/* Full Name */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
@@ -18,6 +62,7 @@ export default function OrderInfo() {
                 </label>
                 <input
                   type="text"
+                  name="fullName"
                   placeholder="Your Name"
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 />
@@ -30,6 +75,7 @@ export default function OrderInfo() {
                 </label>
                 <input
                   type="text"
+                  name="number"
                   placeholder="01xxxxxxxx"
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 />
@@ -40,10 +86,14 @@ export default function OrderInfo() {
                 <label className="block text-sm font-medium text-gray-700">
                   Your Area
                 </label>
-                <select className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary">
-                  <option>--Select Your Area--</option>
-                  <option>In Side Dhaka 60TK</option> 
-                  <option>Out Side Dhaka 120TK</option> 
+                <select
+                  required
+                  name="deliveryArea"
+                  className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
+                >
+                  <option disabled>--Select Your Area--</option>
+                  <option>In Side Dhaka 60TK</option>
+                  <option>Out Side Dhaka 120TK</option>
                   {/* Add more options as needed */}
                 </select>
               </div>
@@ -54,6 +104,7 @@ export default function OrderInfo() {
                   Full Address
                 </label>
                 <textarea
+                  name="fullAddress"
                   placeholder="Village, union, thana, district"
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 ></textarea>
@@ -107,9 +158,7 @@ export default function OrderInfo() {
                       Men{`'`}s Camo Design Winter Set
                     </span>
                   </td>
-                  <td>
-                    2
-                  </td>
+                  <td>2</td>
                   <td className="p-2">850 TK</td>
                   <td className="p-2">850 TK</td>
                 </tr>

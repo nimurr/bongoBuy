@@ -7,16 +7,21 @@ import { RxCross1 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import HeaderCatagories from "./HeaderCetagories";
 import HeaderTop from "./HeaderTop";
+import axios from "axios";
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
   const [isSticky, setIsSticky] = useState(false); // State for sticky navbar
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [favoritesCount, setFavoritesCount] = useState(0); // State for favorite count
+ 
   const clickMenu = () => {
     setMenu(!menu);
   };
 
-  // Effect to handle scroll event
+  const handleClose = () => setIsOpen(!isOpen);
+
+  // Effect to handle scroll event for sticky navbar
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -24,16 +29,24 @@ export default function Header() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
+  // Effect to get favorite items from localStorage
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setFavoritesCount(storedFavorites.length); // Set the count of favorite items
+  }, []);
 
-  const handleClose = () => setIsOpen(!isOpen);
+  const [settingInfo , setSettingInfo] = useState([])
+
+  useEffect(()=> {
+    axios.get('http://localhost:5000/site-settings')
+    .then( res => {
+      if(res?.data) setSettingInfo(res?.data)
+    })
+  },[])
+
 
   return (
     <div className="relative">
@@ -65,26 +78,30 @@ export default function Header() {
                 onClick={() => setIsOpen(true)}
                 className="md:hidden text-3xl"
               />
-              <Drawer className="md:hidden  dark:bg-white dark:text-black" open={isOpen} onClose={handleClose} position="left">
-                <Drawer.Header/>
+              <Drawer
+                className="md:hidden dark:bg-white dark:text-black"
+                open={isOpen}
+                onClose={handleClose}
+                position="left"
+              >
+                <Drawer.Header />
                 <Drawer.Items>
-                 <ul className="my-10">
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                  <Link className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2" to={'/'}>Catagories</Link>
-                 </ul>
+                  <ul className="my-10">
+                    <Link
+                      className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2"
+                      to={"/"}
+                    >
+                      Categories
+                    </Link>
+                    {/* Add more links as needed */}
+                  </ul>
                 </Drawer.Items>
               </Drawer>
             </div>
           ) : (
             <RxCross1 className="md:hidden text-2xl" onClick={clickMenu} />
           )}
+
           <Navbar.Collapse className={`${menu ? "block" : "hidden"}`}>
             <div className="sm:flex flex-wrap items-center xl:gap-8 gap-5 sm:mt-0 mt-5">
               <div className="relative border rounded-md overflow-hidden">
@@ -97,20 +114,28 @@ export default function Header() {
                 <IoSearch className="absolute right-3 sm:top-[30%] top-[20%] text-2xl" />
               </div>
               <Link
-                to={"tel:+8801708784404"}
+                to={`tel:${ settingInfo[0]?.phone}`}
                 className="xl:flex hidden gap-1 items-center cursor-pointer"
               >
                 <MdCall className="text-primary text-3xl rotate-[35deg]" />
                 <div>
                   <h2>Call Us Now:</h2>
-                  <h3>+88 017*******</h3>
+                  <h3>+88 { settingInfo[0]?.phone}</h3>
                 </div>
               </Link>
-              <Link to={'/wishlist'} className="relative hidden xl:block px-5 border-r border-l cursor-pointer">
+
+              {/* Favorites with count */}
+              <Link
+                to={"/wishlist"}
+                className="relative hidden xl:block px-5 border-r border-l cursor-pointer"
+              >
                 <FaRegHeart className="text-3xl text-primary" />
-                <span className="absolute -bottom-2 right-2">0</span>
+                <span className="absolute bottom-0 right-2 text-sm bg-red-500 text-white w-5 h-5 flex justify-center items-center py-1 rounded-full">
+                  {favoritesCount} {/* Display number of favorites */}
+                </span>
               </Link>
-              <div className=" hidden xl:block">
+
+              <div className="hidden xl:block">
                 <h3>Cart amount</h3>
                 <span className="font-bold">00 TK</span>
               </div>
