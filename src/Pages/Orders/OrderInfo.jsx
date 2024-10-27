@@ -2,8 +2,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function OrderInfo() {
-
-
   const handleOrderSubmit = async (e) => {
     e.preventDefault();
 
@@ -13,41 +11,62 @@ export default function OrderInfo() {
     const number = form.number.value;
     const deliveryArea = form.deliveryArea.value;
     const fullAddress = form.fullAddress.value;
-    const productId = 'defgdfg455df4g564fg54df45g45dfg';
+    const productId = "defgdfg455df4g564fg54df45g45dfg";
     const productPrice = 1560;
     const productQuantity = 2;
-    const productSize = 'M'; 
-    const formData = {fullName , number , deliveryArea , fullAddress , productQuantity , productId , productPrice , productSize}
- 
+    const productSize = "M";
+    const formData = {
+      fullName,
+      number,
+      deliveryArea,
+      fullAddress,
+      productQuantity,
+      productId,
+      productPrice,
+      productSize,
+    };
 
-    await axios.post('http://localhost:5000/customer-orders' , formData)
-    .then(res =>  {
-      
-      if (res?.data) {
-        toast.success("Order Submit Successfully !", {
+    try {
+      await axios
+        .post("http://localhost:5000/customer-orders", formData)
+        .then((res) => {
+          if (res?.data) {
+            toast.success("Order Submitted Successfully!", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+
+            form.reset();
+          }
+        });
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      toast.error(
+        "There was an error submitting your order. Please try again.",
+        {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
-        });
-        
-        form.reset();
-
-      } 
-    })
-
+        }
+      );
+    }
   };
-
-
 
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
-       <ToastContainer />
-      <div className=" flex items-center justify-center">
+      <ToastContainer />
+      <div className="flex items-center justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-8 w-full bg-white rounded-md shadow-lg">
           {/* Order Form Section */}
           <div className="md:p-6 p-4">
@@ -92,8 +111,8 @@ export default function OrderInfo() {
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 >
                   <option disabled>--Select Your Area--</option>
-                  <option>In Side Dhaka 60TK</option>
-                  <option>Out Side Dhaka 120TK</option>
+                  <option>Inside Dhaka 60TK</option>
+                  <option>Outside Dhaka 120TK</option>
                   {/* Add more options as needed */}
                 </select>
               </div>
@@ -147,16 +166,14 @@ export default function OrderInfo() {
                 </tr>
               </thead>
               <tbody className="text-xs">
-                <tr className="border-t-2  border-b-2">
+                <tr className="border-t-2 border-b-2">
                   <td className="py-3 flex items-center gap-2">
                     <img
                       src="https://mohasagor.com/public/storage/images/products/product_1723892877_1506.jpg" // Placeholder image
                       alt="Product"
                       className="w-12 h-12 object-cover rounded-md"
                     />
-                    <span className="text-xs">
-                      Men{`'`}s Camo Design Winter Set
-                    </span>
+                    <span className="text-xs">Mens Camo Design Winter Set</span>
                   </td>
                   <td>2</td>
                   <td className="p-2">850 TK</td>
@@ -166,7 +183,7 @@ export default function OrderInfo() {
             </table>
 
             {/* Summary Calculation */}
-            <div className=" pt-4 text-sm text-gray-700">
+            <div className="pt-4 text-sm text-gray-700">
               <p className="mb-2">
                 Sub Total: <span className="float-right">850.00 TK</span>
               </p>

@@ -1,9 +1,21 @@
+import { useContext } from "react";
 import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { TbMessageCircleStar } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function Profile() {
+
+  const {logOut} = useContext(AuthContext)
+
+
+  const handleLogout =()=>{
+    logOut();
+  }
+
+
+
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10 lg:grid grid-cols-4 gap-10">
       <div className="col-span-1 bg-gray-50 rounded-sm lg:py-20 ">
@@ -58,6 +70,7 @@ lg:text-2xl"
             />
             My Reviews
           </NavLink>
+          <button onClick={handleLogout} className="p-2 bg-red-600 text-white rounded my-5">Logout</button>
         </ul>
       </div>
 

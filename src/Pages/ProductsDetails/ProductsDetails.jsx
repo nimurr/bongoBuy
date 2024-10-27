@@ -226,7 +226,7 @@ export default function ProductsDetails() {
             <FaAngleRight />{" "}
             <Link
               className="hover:underline hover:text-primary duration-300 text-sm"
-              to={"/"}
+              to={"/categories/:id"}
             >
               WINTER COLLECTION
             </Link>

@@ -51,12 +51,15 @@ function App() {
     };
   }, []);
   const [settingInfo, setSettingInfo] = useState([]);
-
+  console.log(settingInfo)
+  
   useEffect(() => {
     axios.get("http://localhost:5000/site-settings").then((res) => {
       if (res?.data) setSettingInfo(res?.data);
     });
   }, []);
+
+
 
   if (loading) {
     return (
@@ -69,6 +72,8 @@ function App() {
       </div>
     );
   }
+
+
 
   return (
     <div className="flex flex-col min-h-screen">
