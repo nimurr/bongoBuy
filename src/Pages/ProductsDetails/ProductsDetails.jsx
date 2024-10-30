@@ -1,5 +1,5 @@
 import { Modal } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidLike } from "react-icons/bi";
 import { CiHeart, CiShoppingCart } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,11 +17,20 @@ import {
 import { FaTruckFast } from "react-icons/fa6";
 import { IoHomeSharp, IoLogoWhatsapp } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function ProductsDetails() {
   const { id } = useParams();
+
+  const [product, setProducts] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/addProducts/${id}`)
+      .then((res) => setProducts(res.data));
+  }, []);
+  console.log(product);
 
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
@@ -64,6 +73,49 @@ export default function ProductsDetails() {
 
     window.location.reload(true);
   };
+
+  const [addToCart, setaddToCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
+  // Handle favorite click
+  const handleAddToCart = () => {
+    let updatedAddTocart = [...addToCart];
+
+    // Check if the product ID is already in favorites
+    if (updatedAddTocart.includes(id)) {
+      updatedAddTocart = updatedAddTocart.filter((id) => id !== id); // Remove from favorites
+      toast.success("Removed from wishlist!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      updatedAddTocart.push(id); // Add to favorites
+      toast.success("Added to wishlist!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+
+    // Save the updated favorites list to localStorage
+    localStorage.setItem("cart", JSON.stringify(updatedAddTocart));
+    // Update state
+    setaddToCart(updatedAddTocart);
+
+    window.location.reload(true);
+  };
+
   // ================ selected Size ============
   const [selectedSize, setSelectedSize] = useState("");
   const handleSizeChange = (event) => {
@@ -80,6 +132,8 @@ export default function ProductsDetails() {
       setQuantity(quantity - 1); // Decrease quantity by 1, but not below 1
     }
   };
+
+  console.log(quantity, selectedSize, id);
 
   //=========== image zoom ==========
   const [zoom, setZoom] = useState(false); // To toggle zoom
@@ -150,48 +204,18 @@ export default function ProductsDetails() {
     form.reset();
   };
 
-  // Function to handle adding the item to localStorage
-  const handleAddToCart = (product) => {
-    // Retrieve existing cart items from localStorage
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Check if the item is already in the cart
-    const itemExists = cart.some((item) => item.id === product.id); // Assuming product has a unique id property
 
-    if (itemExists) { 
-      toast.error("This item is already in your cart!", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      return; // Exit the function if the item already exists
+  // const navigate = useNavigate();
+  const discountPrice =
+    product?.rPrice * (1 - product?.discount / 100).toFixed(2);
+
+  // console.log(quantity, selectedSize, discountPrice);
+  const handleOrders =()=>{
+    if(!selectedSize){
+      return alert("please Select Size")
     }
-
-    // Add the new product to the cart
-    const updatedCart = [...cart, product];
-
-    // Save the updated cart back to localStorage
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-
-    toast.success("Item added to cart!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-    window.location.reload()
-
-  };
+  }
 
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
@@ -206,7 +230,7 @@ export default function ProductsDetails() {
             onMouseLeave={handleMouseLeave}
           >
             <img
-              src="https://mohasagor.com/public/storage/images/products/product_1723892877_1506.jpg"
+              src={product?.uploadImages}
               alt="Zoomable"
               className={`w-full h-full transition-transform duration-300 ease-in-out ${
                 zoom ? "scale-[2.5]" : "scale-100"
@@ -226,14 +250,15 @@ export default function ProductsDetails() {
             <FaAngleRight />{" "}
             <Link
               className="hover:underline hover:text-primary duration-300 text-sm"
-              to={"/categories/:id"}
+              to={`/categories/${product?.category}`}
             >
-              WINTER COLLECTION
+              {product?.category}
             </Link>
           </div>
           <div className="my-5">
             <h2 className="text-xl font-bold">
-              BUY 1 GET 1 FREE Sweatpant Trouser Offer
+              {product?.name}
+              {/* BUY 1 GET 1 FREE Sweatpant Trouser Offer */}
             </h2>
             <Link
               to={
@@ -261,96 +286,36 @@ export default function ProductsDetails() {
           </div>
           <div>
             <h3 className="my-5">
-              <span className="font-semibold">Code:</span> 1242
+              <span className="font-semibold">Code: </span>
+              {product?.pCode}
             </h3>
             <h3 className="my-5">
-              <span className="font-semibold">Price:</span> 590 TK{" "}
-              <del className="text-gray-500">790 TK</del>
+              <span className="font-semibold">Price:</span>{" "}
+              {(product?.rPrice * (1 - product?.discount / 100)).toFixed(2)}TK
+              <del className="text-gray-500 ml-2">{product?.rPrice}TK</del>
             </h3>
             <h3 className="flex items-center gap-3 flex-wrap">
               <span className="font-semibold">Size:</span>
               <div className="flex gap-4">
-                <label
-                  className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                    selectedSize === "M"
-                      ? "bg-primary text-white border-primary"
-                      : "border-gray-400"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    value="M"
-                    checked={selectedSize === "M"}
-                    onChange={handleSizeChange}
-                    className="hidden"
-                  />
-                  M
-                </label>
-
-                <label
-                  className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                    selectedSize === "L"
-                      ? "bg-primary text-white border-primary"
-                      : "border-gray-400"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    value="L"
-                    checked={selectedSize === "L"}
-                    onChange={handleSizeChange}
-                    className="hidden"
-                  />
-                  L
-                </label>
-                <label
-                  className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                    selectedSize === "XL"
-                      ? "bg-primary text-white border-primary"
-                      : "border-gray-400"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    value="XL"
-                    checked={selectedSize === "XL"}
-                    onChange={handleSizeChange}
-                    className="hidden"
-                  />
-                  XL
-                </label>
-                <label
-                  className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                    selectedSize === "2XL"
-                      ? "bg-primary text-white border-primary"
-                      : "border-gray-400"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    value="2XL"
-                    checked={selectedSize === "2XL"}
-                    onChange={handleSizeChange}
-                    className="hidden"
-                  />
-                  2XL
-                </label>
-                <label
-                  className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                    selectedSize === "3XL"
-                      ? "bg-primary text-white border-primary"
-                      : "border-gray-400"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    value="3XL"
-                    checked={selectedSize === "3XL"}
-                    onChange={handleSizeChange}
-                    className="hidden"
-                  />
-                  3XL
-                </label>
+                {product?.sizes?.map((item, idx) => (
+                  <label
+                    key={idx}
+                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
+                      selectedSize === item
+                        ? "bg-primary text-white border-primary"
+                        : "border-gray-400"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      value={item}
+                      checked={selectedSize === item}
+                      onChange={handleSizeChange}
+                      className="hidden"
+                    />
+                    {item}
+                  </label>
+                ))}
               </div>
             </h3>
 
@@ -374,7 +339,8 @@ export default function ProductsDetails() {
               </div>
 
               <Link
-                to={"/orders/:id"}
+                to={`${selectedSize && `/orders/${id}?discountPrice=${discountPrice}&quantity=${quantity}&selectedSize=${selectedSize}`  }`} // Correctly formatted URL
+                onClick={handleOrders}
                 className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2"
               >
                 Order Now <CiShoppingCart className="text-xl font-bold" />
@@ -479,9 +445,7 @@ export default function ProductsDetails() {
           </button>
         </div>
         <div className="p-4 border border-gray-300 rounded">
-          {activeTab === "profile" && (
-            <div> This content is dynamic . So add will </div>
-          )}
+          {activeTab === "profile" && <div> {product?.description} </div>}
           {activeTab === "dashboard" && (
             <div className="px-5">
               <ul>

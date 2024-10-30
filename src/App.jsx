@@ -51,7 +51,7 @@ function App() {
     };
   }, []);
   const [settingInfo, setSettingInfo] = useState([]);
-  console.log(settingInfo)
+  // console.log(settingInfo)
   
   useEffect(() => {
     axios.get("http://localhost:5000/site-settings").then((res) => {

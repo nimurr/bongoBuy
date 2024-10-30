@@ -8,9 +8,26 @@ import "swiper/css/autoplay"; // Import autoplay styles
 
 // Import required modules
 import { Pagination, Autoplay } from "swiper/modules"; // Add Autoplay module
-import { Link, NavLink } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import { API } from "../../Api";
+import { useEffect, useState } from "react";
 export default function CatagoriesItem() {
+  const api = API;
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch(`${api}/all-categories`)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setCategories(data); // Set the fetched data into the categories state
+      })
+      .catch((error) => console.error("Error fetching categories:", error));
+  }, []);
+
+  // console.log(categories);
+
   return (
     <div className="my-10">
       <h2 className="mb-5 text-xl font-semibold text-tColor">
@@ -40,20 +57,17 @@ export default function CatagoriesItem() {
         modules={[Pagination, Autoplay]} // Include Autoplay in the modules
         className="mySwiper"
       >
-        
-        {[...Array(10)].map((_, idx) => (
+        {categories?.map((category, idx) => (
           <SwiperSlide key={idx} className="h-auto w-full bg-primary relative">
-          <NavLink to={'/categories/:id'}>
-            <img
-              loading="lazy"
-              src="https://mohasagor.com/public/storage/images/category/2Geo6S0bALej04uMsQZeZtQq6XGzkt6hmJcka9OB.png"
-              alt=""
-            />
-            <span className="absolute bottom-5 bg-white p-2 rounded-md left-[35%]">
-              T-shirt
-            </span>
-          </NavLink>
-        </SwiperSlide>
+            <NavLink to={`/categories/${category?.categoryName}`}>
+              <img loading="lazy" src={category?.uploadImage} alt="" />
+              <div className="absolute bottom-5 w-full ">
+                <span className="  bg-white p-1 rounded font-semibold ">
+                  {category?.categoryName}
+                </span>
+              </div>
+            </NavLink>
+          </SwiperSlide>
         ))}
       </Swiper>
     </div>

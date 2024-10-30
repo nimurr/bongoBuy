@@ -3,25 +3,29 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function Login() {
-  const { loginWithGoogle, user } = useContext(AuthContext);
+  const { loginWithGoogle, user , login } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location?.state)
+  console.log(location)
 
   const handleLoginWithEmailPass = (e) => {
+
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    const formData = { password, email };
-
+    // const formData = { password, email };
+    login(email , password)
+    .then(res => {
+      navigate('/')
+    })
     // console.log(formData);
   };
 
   const handleLoginGoogle = () => { 
 
     loginWithGoogle().then(res => {
-      navigate(location?.state || '/')
+      navigate('/')
     })
 
   };

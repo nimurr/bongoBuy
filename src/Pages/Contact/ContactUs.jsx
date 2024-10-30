@@ -5,15 +5,17 @@ import { MdEmail } from "react-icons/md";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { API } from "../../Api";
 
 export default function ContactUs() {
   const { user } = useContext(AuthContext);
   const user2 = user;
+  const api = API;
   
   const [settingInfo , setSettingInfo] = useState([])
 
   useEffect(()=> {
-    axios.get('http://localhost:5000/site-settings')
+    axios.get(`${api}/site-settings`)
     .then( res => {
       if(res?.data) setSettingInfo(res?.data)
     })

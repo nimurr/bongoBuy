@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -12,6 +12,7 @@ import { Pagination, Autoplay } from "swiper/modules"; // Add Autoplay module
 import { FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 export default function NewProducts({ data }) {
   const [favorites, setFavorites] = useState(
@@ -36,7 +37,7 @@ export default function NewProducts({ data }) {
       });
     } else {
       updatedFavorites.push(productId); // Add to favorites
-       toast.success("Add wishlist !!", {
+      toast.success("Add wishlist !!", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -53,13 +54,17 @@ export default function NewProducts({ data }) {
     // Update state
     setFavorites(updatedFavorites);
 
-
-
     window.location.reload(true);
-
 
     // Clear the message after 2 seconds
   };
+
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/addProducts")
+      .then((res) => setProducts(res?.data));
+  }, []);
 
   return (
     <div className="my-10">
@@ -90,40 +95,40 @@ export default function NewProducts({ data }) {
         modules={[Pagination, Autoplay]} // Include Autoplay in the modules
       >
         {/* Using a static array of 7 items */}
-        {[...Array(7)].map((_, idx) => (
+        {products?.slice(0, 10).map((item, idx) => (
           <SwiperSlide
             key={idx}
             className="w-full h-auto p-2 rounded-md bg-white text-left group"
           >
             <div className="relative">
-              <Link to={`/products/${idx}`} className="">
+              <Link to={`/products/${item?._id}`}>
                 <img
                   loading="lazy"
-                  className="w-full h-[120px] object-cover rounded-t-md"
-                  src="https://mohasagor.com/public/storage/images/product_thumbnail_img/thumbnail_1728107065_4046.jpg"
+                  className="w-full h-auto object-cover rounded-t-md"
+                  src={item?.uploadImages}
                   alt="Product Thumbnail"
                 />
               </Link>
               <span className="absolute top-2 left-0 bg-primary text-sm text-white px-2 rounded-tr-lg rounded-br-lg">
-                0%
+                {item?.discount}%
               </span>
               <div className="mt-2">
-                <h2 className="group-hover:text-primary duration-200 text-sm text-gray-900">
-                  Men{`'`}s Stylish Winter Set Combo- Red
+                <h2 className="group-hover:text-primary duration-200 font-semibold mb-2 text-sm text-gray-900">
+                {item?.name}
                 </h2>
-                <h3 className="text-sm font-semibold text-gray-800">350 TK</h3>
+                <h3 className="text-sm font-semibold text-gray-800 ">{(item?.rPrice * (1 - item?.discount / 100)).toFixed(2)}TK <del className="ml-2 font-normal">{item?.rPrice}TK</del></h3>
                 <div className="flex justify-between mt-2">
                   <Link
-                    to={`/products/${idx}`}
+                    to={`/products/${item?._id}`}
                     className="px-6 py-[3px] rounded-br-[20px] border-primary border-2 text-primary text-sm"
                   >
                     Order Now
                   </Link>
                   <FaRegHeart
                     className={`text-primary cursor-pointer text-2xl hover:scale-105 ${
-                      favorites.includes(idx) ? "text-red-500" : ""
+                      favorites.includes(item?._id) ? "text-red-500" : ""
                     }`}
-                    onClick={() => handleFavoriteClick(idx)} // Pass product index as ID
+                    onClick={() => handleFavoriteClick(item?._id)}
                   />
                 </div>
               </div>

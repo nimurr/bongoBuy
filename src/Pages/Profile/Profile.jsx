@@ -4,6 +4,8 @@ import { CgProfile } from "react-icons/cg";
 import { TbMessageCircleStar } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { HiOutlineLogout } from "react-icons/hi";
+
 
 export default function Profile() {
 
@@ -23,7 +25,7 @@ export default function Profile() {
           <NavLink
             to="/profile/profiledetails"
             className={({ isActive }) =>
-              `flex items-center lg:text-xl font-semibold py-2 px-5 ${
+              `flex items-center font-semibold py-2 px-5 ${
                 isActive ? "text-white bg-primary" : ""
               }`
             }
@@ -34,8 +36,7 @@ export default function Profile() {
           <NavLink
             to="/profile/current-order"
             className={({ isActive }) =>
-              `flex items-center lg:
-lg:text-xl font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
+              `flex items-center font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
             }
           >
             <BsCartPlusFill
@@ -47,8 +48,7 @@ lg:text-2xl"
           <NavLink
             to="/profile/previous-order"
             className={({ isActive }) =>
-              `flex items-center lg:
-lg:text-xl font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
+              `flex items-center  font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
             }
           >
             <BsCartCheckFill
@@ -60,8 +60,7 @@ lg:text-2xl"
           <NavLink
             to="/profile/my-reviews"
             className={({ isActive }) =>
-              `flex items-center lg:
-lg:text-xl font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
+              `flex items-center  font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
             }
           >
             <TbMessageCircleStar
@@ -70,7 +69,9 @@ lg:text-2xl"
             />
             My Reviews
           </NavLink>
-          <button onClick={handleLogout} className="p-2 bg-red-600 text-white rounded my-5">Logout</button>
+          <button onClick={handleLogout} className="p-2 flex items-center gap-2 font-semibold bg-red-600 text-white rounded my-5 justify-center">Logout 
+          <HiOutlineLogout className=" text-xl"/>
+          </button>
         </ul>
       </div>
 

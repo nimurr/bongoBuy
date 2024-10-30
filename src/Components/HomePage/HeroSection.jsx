@@ -12,7 +12,7 @@ export default function HeroSection() {
     });
   }, []);
 
-  console.log(slider[0]?.images);
+  // console.log(slider[0]?.images);
 
   return (
     <div className="">

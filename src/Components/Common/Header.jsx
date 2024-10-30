@@ -14,7 +14,7 @@ export default function Header() {
   const [isSticky, setIsSticky] = useState(false); // State for sticky navbar
   const [isOpen, setIsOpen] = useState(false);
   const [favoritesCount, setFavoritesCount] = useState(0); // State for favorite count
- 
+
   const clickMenu = () => {
     setMenu(!menu);
   };
@@ -38,15 +38,44 @@ export default function Header() {
     setFavoritesCount(storedFavorites.length); // Set the count of favorite items
   }, []);
 
-  const [settingInfo , setSettingInfo] = useState([])
+  const [settingInfo, setSettingInfo] = useState([]);
 
-  useEffect(()=> {
-    axios.get('http://localhost:5000/site-settings')
-    .then( res => {
-      if(res?.data) setSettingInfo(res?.data)
-    })
-  },[])
+  useEffect(() => {
+    axios.get("http://localhost:5000/site-settings").then((res) => {
+      if (res?.data) setSettingInfo(res?.data);
+    });
+  }, []);
 
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/addProducts")
+      .then((res) => setProducts(res?.data));
+  }, []);
+
+  const [searchData, setSearchData] = useState([]);
+
+  // Search handler function
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase(); // Convert input to lowercase
+    console.log(searchTerm);
+    if (searchTerm.length < 1) {
+      setSearchData([]);
+      return; // Exit the function early
+    }
+    // Filter products based on the search term
+    const filteredProducts = products.filter(
+      (item) => item?.name?.toLowerCase().includes(searchTerm) // Convert product name to lowercase
+    );
+    setSearchData(filteredProducts);
+  };
+
+  const handleSearchItem = async () => {
+    setSearchData([]);
+    await window.location.reload();
+  };
+
+  // console.log(searchData);
 
   return (
     <div className="relative">
@@ -102,25 +131,45 @@ export default function Header() {
             <RxCross1 className="md:hidden text-2xl" onClick={clickMenu} />
           )}
 
-          <Navbar.Collapse className={`${menu ? "block" : "hidden"}`}>
-            <div className="sm:flex flex-wrap items-center xl:gap-8 gap-5 sm:mt-0 mt-5">
+          <Navbar.Collapse className={`${menu ? "block" : "hidden "} relative`}>
+            <div className="sm:flex flex-wrap items-center xl:gap-8 gap-5 sm:mt-0 mt-5 ">
               <div className="relative border rounded-md overflow-hidden">
                 <input
                   className="sm:py-4 border-none w-[100vw] md:w-[500px] pr-10"
                   type="text"
                   placeholder="Search Here ..."
                   name="search"
+                  onChange={handleSearch}
                 />
                 <IoSearch className="absolute right-3 sm:top-[30%] top-[20%] text-2xl" />
               </div>
+              {searchData.length > 0 && (
+                <div className="absolute px-5 py-2 top-[80px] sm:top-[60px] rounded-md bg-[#fff] min-h-10 w-[100vw] md:w-[500px] z-[9999] h-[50vh] overflow-y-auto">
+                  {searchData?.slice(0, 8).map((item, idx) => (
+                    <a
+                      href={`/products/${item?._id}`}
+                      className="my-3 gap-2 border-b flex items-center py-1"
+                      key={idx}
+                    >
+                      <img className="w-10" src={item?.uploadImages} alt="" />
+                      <div>
+                        <span>{item?.name}</span>
+                        <br />
+                        <span className="font-normal mr-2">{(item?.rPrice * (1 - item?.discount / 100)).toFixed(2)}TK</span>
+                        <del className="font-normal ">{item?.rPrice}TK </del>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
               <Link
-                to={`tel:${ settingInfo[0]?.phone}`}
+                to={`tel:${settingInfo[0]?.phone}`}
                 className="xl:flex hidden gap-1 items-center cursor-pointer"
               >
                 <MdCall className="text-primary text-3xl rotate-[35deg]" />
                 <div>
                   <h2>Call Us Now:</h2>
-                  <h3>+88 { settingInfo[0]?.phone}</h3>
+                  <h3>+88 {settingInfo[0]?.phone}</h3>
                 </div>
               </Link>
 

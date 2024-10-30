@@ -1,15 +1,36 @@
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function OrderInfo() {
+  const { id } = useParams(); // Get the order ID from the URL
+  const [searchParams] = useSearchParams(); // Get the search parameters
+  const discountPrice = searchParams.get("discountPrice"); // Access discountPrice
+  const quantity = searchParams.get("quantity"); // Access quantity
+  const selectedSize = searchParams.get("selectedSize"); // Access selectedSize
+
+  const [product, setProduct] = useState({});
+  const [deliveryCharge, setDeliveryCharge] = useState(0); // State for delivery charge
+
+  const { user } = useContext(AuthContext);
+  // console.log(user?.email)
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/addProducts/${id}`)
+      .then((res) => setProduct(res?.data));
+  }, [id]);
+
   const handleOrderSubmit = async (e) => {
     e.preventDefault();
-
     const form = e.target;
+    const email = user?.email;
 
     const fullName = form.fullName.value;
     const number = form.number.value;
-    const deliveryArea = form.deliveryArea.value;
+    const deliveryArea = form.deliveryArea.value; // Get delivery area
     const fullAddress = form.fullAddress.value;
     const productId = "defgdfg455df4g564fg54df45g45dfg";
     const productPrice = 1560;
@@ -24,6 +45,7 @@ export default function OrderInfo() {
       productId,
       productPrice,
       productSize,
+      email,
     };
 
     try {
@@ -41,8 +63,9 @@ export default function OrderInfo() {
               progress: undefined,
               theme: "light",
             });
-
             form.reset();
+            // navigate('/profile/current-order')
+            setDeliveryCharge(0); // Reset delivery charge
           }
         });
     } catch (error) {
@@ -63,6 +86,19 @@ export default function OrderInfo() {
     }
   };
 
+  // Function to handle delivery area change
+  const handleAreaChange = (e) => {
+    const selectedArea = e.target.value;
+    if (selectedArea === "Inside Dhaka 60TK") {
+      setDeliveryCharge(60); // Set delivery charge for Inside Dhaka
+    } else if (selectedArea === "Outside Dhaka 120TK") {
+      setDeliveryCharge(120); // Set delivery charge for Outside Dhaka
+    } else {
+      setDeliveryCharge(0); // Default or reset
+    }
+  };
+
+  console.log(product?.discount);
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
       <ToastContainer />
@@ -82,6 +118,7 @@ export default function OrderInfo() {
                 <input
                   type="text"
                   name="fullName"
+                  required
                   placeholder="Your Name"
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 />
@@ -94,6 +131,7 @@ export default function OrderInfo() {
                 </label>
                 <input
                   type="text"
+                  required
                   name="number"
                   placeholder="01xxxxxxxx"
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
@@ -108,6 +146,7 @@ export default function OrderInfo() {
                 <select
                   required
                   name="deliveryArea"
+                  onChange={handleAreaChange} // Call the handler on change
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 >
                   <option disabled>--Select Your Area--</option>
@@ -124,6 +163,7 @@ export default function OrderInfo() {
                 </label>
                 <textarea
                   name="fullAddress"
+                  required
                   placeholder="Village, union, thana, district"
                   className="mt-1 block w-full px-4 py-2 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring focus:border-primary"
                 ></textarea>
@@ -158,10 +198,14 @@ export default function OrderInfo() {
                     Quantity
                   </th>
                   <th className="pb-3 text-sm font-medium text-gray-600">
-                    Price
+                    {" "}
+                    Size
                   </th>
                   <th className="pb-3 text-sm font-medium text-gray-600">
-                    Total Price
+                    Regular Price
+                  </th>
+                  <th className="pb-3 text-sm font-medium text-gray-600">
+                    Discount Price
                   </th>
                 </tr>
               </thead>
@@ -169,15 +213,19 @@ export default function OrderInfo() {
                 <tr className="border-t-2 border-b-2">
                   <td className="py-3 flex items-center gap-2">
                     <img
-                      src="https://mohasagor.com/public/storage/images/products/product_1723892877_1506.jpg" // Placeholder image
-                      alt="Product"
+                      src={product?.uploadImages}
                       className="w-12 h-12 object-cover rounded-md"
                     />
-                    <span className="text-xs">Mens Camo Design Winter Set</span>
+                    <span className="text-xs">{product?.name}</span>
                   </td>
-                  <td>2</td>
-                  <td className="p-2">850 TK</td>
-                  <td className="p-2">850 TK</td>
+                  <td>{quantity}</td>
+                  <td>{selectedSize}</td>
+                  <td className="p-2">{product?.rPrice} TK</td>
+                  <td className="p-2">
+                    {Number(discountPrice) +
+                      (deliveryCharge ? deliveryCharge : 60)}{" "}
+                    TK
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -185,16 +233,29 @@ export default function OrderInfo() {
             {/* Summary Calculation */}
             <div className="pt-4 text-sm text-gray-700">
               <p className="mb-2">
-                Sub Total: <span className="float-right">850.00 TK</span>
+                Regular Price:{" "}
+                <span className="float-right"> {product?.rPrice} TK</span>
               </p>
               <p className="mb-2">
-                Delivery Charge: <span className="float-right">0 TK</span>
+                Discount :{" "}
+                <span className="float-right">- {product?.discount} %</span>
               </p>
               <p className="mb-2">
-                Discount Amount: <span className="float-right">0 TK</span>
+                Delivery Charge:{" "}
+                <span className="float-right">
+                  + {deliveryCharge ? deliveryCharge : "60"} TK
+                </span>
               </p>
+              <hr className="my-2" />
+
               <p className="mb-2 font-semibold">
-                Payable Amount: <span className="float-right">850 TK</span>
+                Payable Amount:{" "}
+                <span className="float-right">
+                  ={" "}
+                  {Number(discountPrice) +
+                    (deliveryCharge ? deliveryCharge : 60)}{" "}
+                  TK
+                </span>
               </p>
             </div>
           </div>
