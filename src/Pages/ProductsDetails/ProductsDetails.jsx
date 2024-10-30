@@ -204,18 +204,26 @@ export default function ProductsDetails() {
     form.reset();
   };
 
-
-
   // const navigate = useNavigate();
   const discountPrice =
     product?.rPrice * (1 - product?.discount / 100).toFixed(2);
 
   // console.log(quantity, selectedSize, discountPrice);
-  const handleOrders =()=>{
-    if(!selectedSize){
-      return alert("please Select Size")
+  const handleOrders = () => {
+    if (!selectedSize) {
+      return alert("please Select Size");
     }
-  }
+  };
+
+  const [settingInfo, setSettingInfo] = useState([]);
+  // console.log(settingInfo)
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/site-settings").then((res) => {
+      if (res?.data) setSettingInfo(res?.data);
+    });
+  }, []);
+
 
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
@@ -264,9 +272,9 @@ export default function ProductsDetails() {
               to={
                 "https://api.whatsapp.com/send/?phone=%2B8801740189038&text&type=phone_number&app_absent=0"
               }
-              className="mt-2 flex items-center gap-2 text-[#36a845]"
+              className="mt-2  gap-2 inline-block text-[#36a845]"
             >
-              <IoLogoWhatsapp className="text-xl " /> Ask for details
+              <IoLogoWhatsapp className="text-xl inline mr-2" /> Ask for details
             </Link>
           </div>
           <div>
@@ -339,7 +347,10 @@ export default function ProductsDetails() {
               </div>
 
               <Link
-                to={`${selectedSize && `/orders/${id}?discountPrice=${discountPrice}&quantity=${quantity}&selectedSize=${selectedSize}`  }`} // Correctly formatted URL
+                to={`${
+                  selectedSize &&
+                  `/orders/${id}?discountPrice=${discountPrice}&quantity=${quantity}&selectedSize=${selectedSize}`
+                }`} // Correctly formatted URL
                 onClick={handleOrders}
                 className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2"
               >
@@ -509,27 +520,34 @@ export default function ProductsDetails() {
               key={idx}
               className="flex sm:justify-center items-center gap-3 mb-2"
             >
-              {" "}
               <ul className="flex gap-1">
-                <li>
-                  <FaStar />
-                </li>
-                <li>
-                  <FaStar />
-                </li>
-                <li>
-                  <FaStar />
-                </li>
-                <li>
-                  <FaStar />
-                </li>
-                <li>
-                  <FaStar />
-                </li>
+                {Array.from({ length: 5 }, (_, starIdx) => (
+                  <li key={starIdx}>
+                    <FaStar
+                      className={
+                        idx === 0
+                          ? "text-black" // 1st line: all stars black
+                          : idx === 1
+                          ? starIdx < 4
+                            ? "text-black"
+                            : "text-gray-500" // 2nd line: 4 black, 1 gray
+                          : idx === 2
+                          ? starIdx < 3
+                            ? "text-black"
+                            : "text-gray-500" // 3rd line: 3 black, 2 gray
+                          : idx === 3
+                          ? starIdx < 2
+                            ? "text-black"
+                            : "text-gray-500" // 4th line: 2 black, 3 gray
+                          : starIdx === 0
+                          ? "text-black"
+                          : "text-gray-500" // 5th line: 1 black, 4 gray
+                      }
+                    />
+                  </li>
+                ))}
               </ul>
-              <progress id="file" value="0" max="100">
-                {" "}
-              </progress>
+              <progress id="file" value="0" max="100"></progress>
               <div>0.00%</div>
             </div>
           ))}

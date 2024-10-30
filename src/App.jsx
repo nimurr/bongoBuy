@@ -51,13 +51,15 @@ function App() {
     };
   }, []);
   const [settingInfo, setSettingInfo] = useState([]);
-  // console.log(settingInfo)
+  console.log(settingInfo)
   
   useEffect(() => {
     axios.get("http://localhost:5000/site-settings").then((res) => {
       if (res?.data) setSettingInfo(res?.data);
     });
   }, []);
+
+  
 
 
 
@@ -120,7 +122,7 @@ function App() {
             )}
           </Link>
           <Link
-            to={"tel:+8801708784404"}
+            to={`tel:+88${settingInfo[0].phone}`}
             className="flex flex-col items-center text-sm cursor-pointer"
           >
             <MdCall className="text-xl text-primary" />
