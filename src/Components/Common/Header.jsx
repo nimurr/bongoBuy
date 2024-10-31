@@ -4,7 +4,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoMenu, IoSearch } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import HeaderCatagories from "./HeaderCetagories";
 import HeaderTop from "./HeaderTop";
 import axios from "axios";
@@ -39,11 +39,15 @@ export default function Header() {
   }, []);
 
   const [settingInfo, setSettingInfo] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:5000/site-settings").then((res) => {
       if (res?.data) setSettingInfo(res?.data);
     });
+    axios
+      .get("http://localhost:5000/all-categories")
+      .then((res) => setCategories(res.data));
   }, []);
 
   const [products, setProducts] = useState([]);
@@ -75,7 +79,38 @@ export default function Header() {
     await window.location.reload();
   };
 
-  // console.log(searchData);
+  const [cart, setCart] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);
+  // console.log(products)
+
+  useEffect(() => {
+    // Retrieve cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(storedCart);
+
+    // Fetch products from the API
+    axios
+      .get("http://localhost:5000/addProducts")
+      .then((res) => {
+        // Filter products based on cart items
+        const cartProducts = res.data.filter((item) =>
+          storedCart.includes(item._id)
+        );
+        setCartProducts(cartProducts);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, []);
+  // Number(discountPrice) + (deliveryCharge ? deliveryCharge : 60)
+  // (product?.rPrice * (1 - product?.discount / 100)).toFixed(2)
+  const totalPrice = cartProducts?.reduce((pre, current) => {
+    return (
+      pre + Number((current.rPrice * (1 - current.discount / 100)).toFixed(2))
+    );
+  }, 0);
+
+  // console.log(categories);
 
   return (
     <div className="relative">
@@ -101,14 +136,14 @@ export default function Header() {
           </Navbar.Brand>
 
           {!menu ? (
-            <div className="flex items-center gap-2 ">
+            <div className="flex  items-center gap-2 ">
               <IoSearch className="md:hidden text-2xl" onClick={clickMenu} />
               <IoMenu
                 onClick={() => setIsOpen(true)}
-                className="md:hidden text-3xl"
+                className="md:hidden text-4xl"
               />
               <Drawer
-                className="md:hidden dark:bg-white dark:text-black"
+                className="md:hidden dark:bg-white w-56 text-sm dark:text-black"
                 open={isOpen}
                 onClose={handleClose}
                 position="left"
@@ -116,12 +151,17 @@ export default function Header() {
                 <Drawer.Header />
                 <Drawer.Items>
                   <ul className="my-10">
-                    <Link
-                      className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2"
-                      to={"/"}
-                    >
-                      Categories
-                    </Link>
+                    {categories?.map((item, idx) => (
+                      <div key={idx}>
+                        <NavLink
+                          className="block py-2 hover:bg-primary hover:text-white px-2 border-b-2"
+                          to={`/categories/${item?.categoryName}`}
+                        >
+                          {item?.categoryName}
+                        </NavLink>
+                      </div>
+                    ))}
+
                     {/* Add more links as needed */}
                   </ul>
                 </Drawer.Items>
@@ -155,7 +195,12 @@ export default function Header() {
                       <div>
                         <span>{item?.name}</span>
                         <br />
-                        <span className="font-normal mr-2">{(item?.rPrice * (1 - item?.discount / 100)).toFixed(2)}TK</span>
+                        <span className="font-normal mr-2">
+                          {(item?.rPrice * (1 - item?.discount / 100)).toFixed(
+                            2
+                          )}
+                          TK
+                        </span>
                         <del className="font-normal ">{item?.rPrice}TK </del>
                       </div>
                     </a>
@@ -186,7 +231,9 @@ export default function Header() {
 
               <div className="hidden xl:block">
                 <h3>Cart amount</h3>
-                <span className="font-bold">00 TK</span>
+                <span className="font-bold">
+                  {totalPrice ? totalPrice : "00"} TK
+                </span>
               </div>
             </div>
           </Navbar.Collapse>

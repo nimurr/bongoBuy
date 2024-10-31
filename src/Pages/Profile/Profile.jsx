@@ -43,20 +43,8 @@ export default function Profile() {
               className="inline mr-2 lg:
 lg:text-2xl"
             />
-            Current Order
-          </NavLink>
-          <NavLink
-            to="/profile/previous-order"
-            className={({ isActive }) =>
-              `flex items-center  font-semibold py-2 px-5 ${isActive ? "text-white bg-primary" : ""}`
-            }
-          >
-            <BsCartCheckFill
-              className="inline mr-2 lg:
-lg:text-2xl"
-            />
-            Previous Order
-          </NavLink>
+            My Order Info
+          </NavLink> 
           <NavLink
             to="/profile/my-reviews"
             className={({ isActive }) =>
@@ -69,7 +57,7 @@ lg:text-2xl"
             />
             My Reviews
           </NavLink>
-          <button onClick={handleLogout} className="p-2 flex items-center gap-2 font-semibold bg-red-600 text-white rounded my-5 justify-center">Logout 
+          <button onClick={handleLogout} className="p-2 flex items-center gap-2 font-semibold bg-red-600 text-white rounded mt-20 justify-center">Logout 
           <HiOutlineLogout className=" text-xl"/>
           </button>
         </ul>

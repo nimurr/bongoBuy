@@ -56,7 +56,7 @@ export default function WishList() {
           <Table.Head className="dark:text-primary">
             <Table.HeadCell>Product Image</Table.HeadCell>
             <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Price</Table.HeadCell>
+            <Table.HeadCell>Discount Price</Table.HeadCell>
             <Table.HeadCell>Action</Table.HeadCell>
             <Table.HeadCell>Remove</Table.HeadCell>
           </Table.Head>
@@ -75,7 +75,7 @@ export default function WishList() {
                   <Table.Cell className="min-w-32">
                     {item?.name}
                   </Table.Cell>
-                  <Table.Cell className="min-w-32">{item?.rPrice} TK</Table.Cell>
+                  <Table.Cell className="min-w-32">{(item?.rPrice * (1 - item?.discount / 100)).toFixed(2)} TK</Table.Cell>
                   <Table.Cell>
                     <Link
                       to={`/products/${item?._id}`}

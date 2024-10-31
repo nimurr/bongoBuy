@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -15,6 +15,9 @@ export default function OrderInfo() {
   const [product, setProduct] = useState({});
   const [deliveryCharge, setDeliveryCharge] = useState(0); // State for delivery charge
 
+  console.log(Number(discountPrice) +
+    (deliveryCharge ? deliveryCharge : 60))
+
   const { user } = useContext(AuthContext);
   // console.log(user?.email)
   useEffect(() => {
@@ -22,6 +25,9 @@ export default function OrderInfo() {
       .get(`http://localhost:5000/addProducts/${id}`)
       .then((res) => setProduct(res?.data));
   }, [id]);
+
+ 
+
 
   const handleOrderSubmit = async (e) => {
     e.preventDefault();
@@ -32,21 +38,27 @@ export default function OrderInfo() {
     const number = form.number.value;
     const deliveryArea = form.deliveryArea.value; // Get delivery area
     const fullAddress = form.fullAddress.value;
-    const productId = "defgdfg455df4g564fg54df45g45dfg";
-    const productPrice = 1560;
-    const productQuantity = 2;
-    const productSize = "M";
+    const productImages = product?.uploadImages[0] ;
+    const productName = product?.name ;
+    const productPrice = Number(discountPrice) +
+    (deliveryCharge ? deliveryCharge : 60);
+    const productQuantity = quantity;
+    const orderStatus = 'Pending';
+    const productSize = selectedSize;
     const formData = {
       fullName,
       number,
       deliveryArea,
       fullAddress,
       productQuantity,
-      productId,
+      productImages,
+      productName,
       productPrice,
       productSize,
+      orderStatus,
       email,
     };
+    console.log(formData)
 
     try {
       await axios

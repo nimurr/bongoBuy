@@ -1,5 +1,5 @@
 import { Modal } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiSolidLike } from "react-icons/bi";
 import { CiHeart, CiShoppingCart } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,11 +17,13 @@ import {
 import { FaTruckFast } from "react-icons/fa6";
 import { IoHomeSharp, IoLogoWhatsapp } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link,  useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function ProductsDetails() {
   const { id } = useParams();
+  const {user } = useContext(AuthContext)
 
   const [product, setProducts] = useState({});
 
@@ -30,7 +32,7 @@ export default function ProductsDetails() {
       .get(`http://localhost:5000/addProducts/${id}`)
       .then((res) => setProducts(res.data));
   }, []);
-  console.log(product);
+  // console.log(product);
 
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
@@ -133,7 +135,7 @@ export default function ProductsDetails() {
     }
   };
 
-  console.log(quantity, selectedSize, id);
+  // console.log(quantity, selectedSize, id);
 
   //=========== image zoom ==========
   const [zoom, setZoom] = useState(false); // To toggle zoom
@@ -160,48 +162,61 @@ export default function ProductsDetails() {
   const [openModal, setOpenModal] = useState(false);
 
   const [review, setReview] = useState("");
+
   const handleReview = (event) => {
     setReview(event.target.value);
   };
 
   const handlePostReview = async (e) => {
     e.preventDefault();
+    if(user ){
 
-    const form = e.target;
-    const userName = form.userName.value;
-    const message = form.message.value;
-    const formData = { productId: id, review, userName, message };
-    console.log(formData);
+      if(!review){
+        return alert("select Review Number !!!")
+      }
 
-    await axios
-      .post("http://localhost:5000/allReviews", formData)
-      .then((res) => {
-        if (!res) {
-          return toast.error(" Review Submit Error !!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        } else {
-          toast.success(" Review Submit Successful !!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      });
+      const form = e.target;
+      const userName = form.userName.value;
+      const message = form.message.value;
+      const formData = { productId: id, review, userName, message };
+      // console.log(formData);
+  
+      await axios
+        .post("http://localhost:5000/allReviews", formData)
+        .then((res) => {
+          if (!res) {
+            return toast.error(" Review Submit Error !!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          } else {
+            toast.success(" Review Submit Successful !!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        });
+  
+      form.reset();
+    }
+    else{
+      alert('please Login')
+    }
 
-    form.reset();
+
+  
   };
 
   // const navigate = useNavigate();
@@ -216,7 +231,7 @@ export default function ProductsDetails() {
   };
 
   const [settingInfo, setSettingInfo] = useState([]);
-  // console.log(settingInfo)
+  // console.log(settingInfo[0].phone)
 
   useEffect(() => {
     axios.get("http://localhost:5000/site-settings").then((res) => {
@@ -403,7 +418,7 @@ export default function ProductsDetails() {
               Have question about this product ? please call
             </li>
             <li className="flex items-center gap-2 mb-3 text-sm text-primary">
-              <MdCall className="text-xl" /> 017*********
+              <MdCall className="text-xl" /> {settingInfo[0]?.phone}
             </li>
             <li className="flex items-center gap-2 mb-3 text-sm text-primary">
               <MdCall className="text-xl" />{" "}

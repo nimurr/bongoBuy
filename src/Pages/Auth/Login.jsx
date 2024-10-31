@@ -32,8 +32,8 @@ export default function Login() {
   console.log(user);
 
   return (
-    <div className="lg:w-[60%] w-[95%] mx-auto grid grid-cols-2 items-center gap-10 my-10 bg-white ">
-      <div className="">
+    <div className="lg:w-[60%] w-[95%] mx-auto grid sm:grid-cols-2 items-center gap-10 my-10 bg-white ">
+      <div className="sm:block hidden">
         <img
           className="w-full"
           src="https://res.cloudinary.com/nerob/image/upload/v1729098267/BongoBuy/vqk5rl1wnrc3yef2e1ai.png"

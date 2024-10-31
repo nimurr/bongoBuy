@@ -115,7 +115,7 @@ export default function ContactUs() {
             id=""
           ></textarea>
           <input
-            className="w-full p-2 rounded-sm text-white bg-primary inline-block"
+            className="w-full p-2 cursor-pointer rounded-sm text-white bg-primary inline-block"
             type="submit"
             value="Submit"
           />

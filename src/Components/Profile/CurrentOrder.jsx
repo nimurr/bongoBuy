@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function CurrentOrder() {
+
   const { user } = useContext(AuthContext);
 
   const [currentOrder, setCurrentOrder] = useState([]);
+
   useEffect(() => {
     axios.get("http://localhost:5000/customer-orders").then((res) => {
       setCurrentOrder(res.data.filter((item) => item?.email == user?.email));
+      
     });
   }, []);
   console.log(currentOrder);
@@ -24,7 +27,7 @@ export default function CurrentOrder() {
             <Table.HeadCell>Product Image</Table.HeadCell>
             <Table.HeadCell>Name</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
-            <Table.HeadCell>Action</Table.HeadCell>
+            <Table.HeadCell className="text-center">Products Delivery</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y dark:bg-white">
             {currentOrder?.map((item, idx) => (
@@ -35,23 +38,28 @@ export default function CurrentOrder() {
                 <Table.Cell>
                   <img
                     className="w-20 min-w-20"
-                    src="https://mohasagor.com/public/storage/images/product_thumbnail_img/thumbnail_1717392466_1747.jpg"
+                    src={item?.productImages}
                     alt=""
                   />
                 </Table.Cell>
                 <Table.Cell className="min-w-32">
-                  T-shirt | Lorem ipsum dolor sit amet, consectetur adipisicing
-                  elit. Deleniti .
+                  {item?.productName}
                 </Table.Cell>
-                <Table.Cell className="min-w-32">690 TK</Table.Cell>
+                <Table.Cell className="min-w-32">{item?.productPrice}  TK</Table.Cell>
                 <Table.Cell>
                   {" "}
-                  <Link
-                    to={"/"}
-                    className="py-1 px-4 bg-primary text-white rounded min-w-28 text-center block"
+                  <div 
+                    className={`
+                      ${item?.orderStatus == "Pending" && "text-pink-500"}
+                      ${item?.orderStatus == "Processing" && "text-yellow-500"}
+                      ${item?.orderStatus == "Delivery" && "text-blue-500"}
+                      ${item?.orderStatus == "Completed" && "text-green-500"}
+                      ${item?.orderStatus == "Cancel" && "text-red-500"}
+                      
+                      py-1 px-4 text-primary rounded min-w-28 text-center block`}
                   >
-                    View Details
-                  </Link>{" "}
+                    {item?.orderStatus}
+                  </div>{" "}
                 </Table.Cell>
               </Table.Row>
             ))}

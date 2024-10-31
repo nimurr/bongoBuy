@@ -80,11 +80,7 @@ const router = createBrowserRouter([
           {
             path: "/profile/current-order",
             element: <CurrentOrder></CurrentOrder>,
-          },
-          {
-            path: "/profile/previous-order",
-            element: <PreviousOrder></PreviousOrder>,
-          },
+          }, 
           {
             path: "/profile/my-reviews",
             element: <MyReviews></MyReviews>,
