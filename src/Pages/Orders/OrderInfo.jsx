@@ -73,7 +73,7 @@ export default function OrderInfo() {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "light",
+              theme: "colored",
             });
             form.reset();
             // navigate('/profile/current-order')

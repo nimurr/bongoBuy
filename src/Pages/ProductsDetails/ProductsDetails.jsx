@@ -26,13 +26,13 @@ export default function ProductsDetails() {
   const {user } = useContext(AuthContext)
 
   const [product, setProducts] = useState({});
+  // console.log(product)
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/addProducts/${id}`)
       .then((res) => setProducts(res.data));
   }, []);
-  // console.log(product);
 
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
@@ -226,7 +226,16 @@ export default function ProductsDetails() {
   // console.log(quantity, selectedSize, discountPrice);
   const handleOrders = () => {
     if (!selectedSize) {
-      return alert("please Select Size");
+      return toast.error(" Please Select Size For Order !!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -262,6 +271,7 @@ export default function ProductsDetails() {
                 transformOrigin: `${position.x}% ${position.y}%`, // Move image center based on mouse position
               }}
             />
+            <span className="absolute top-2 left-0 rounded-tr-xl text-sm rounded-br-xl bg-primary text-white py-1 px-2 ">{product?.discount} %</span>
           </div>
         </div>
         {/* Products Information  */}
