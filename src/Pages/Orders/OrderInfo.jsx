@@ -40,8 +40,8 @@ export default function OrderInfo() {
     const fullAddress = form.fullAddress.value;
     const productImages = product?.uploadImages[0] ;
     const productName = product?.name ;
-    const productPrice = Number(discountPrice) +
-    (deliveryCharge ? deliveryCharge : 60);
+    const productPrice = (Number(discountPrice * quantity) +
+    (deliveryCharge ? deliveryCharge : 60));
     const productQuantity = quantity;
     const orderStatus = 'Pending';
     const productSize = selectedSize;
@@ -232,10 +232,10 @@ export default function OrderInfo() {
                   </td>
                   <td>{quantity}</td>
                   <td>{selectedSize}</td>
-                  <td className="p-2">{product?.rPrice} TK</td>
+                  <td className="p-2">{product?.rPrice * quantity} TK</td>
                   <td className="p-2">
-                    {Number(discountPrice) +
-                      (deliveryCharge ? deliveryCharge : 60)}{" "}
+                    {(Number(discountPrice * quantity) +
+                    (deliveryCharge ? deliveryCharge : 60))}
                     TK
                   </td>
                 </tr>
@@ -246,7 +246,7 @@ export default function OrderInfo() {
             <div className="pt-4 text-sm text-gray-700">
               <p className="mb-2">
                 Regular Price:{" "}
-                <span className="float-right"> {product?.rPrice} TK</span>
+                <span className="float-right"> {product?.rPrice * quantity} TK</span>
               </p>
               <p className="mb-2">
                 Discount :{" "}
@@ -264,8 +264,8 @@ export default function OrderInfo() {
                 Payable Amount:{" "}
                 <span className="float-right">
                   ={" "}
-                  {Number(discountPrice) +
-                    (deliveryCharge ? deliveryCharge : 60)}{" "}
+                  {(Number(discountPrice * quantity) +
+                    (deliveryCharge ? deliveryCharge : 60)) }{" "}
                   TK
                 </span>
               </p>

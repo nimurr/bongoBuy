@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
+import {  BsCartPlusFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { TbMessageCircleStar } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";

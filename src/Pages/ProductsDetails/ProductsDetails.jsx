@@ -17,13 +17,13 @@ import {
 import { FaTruckFast } from "react-icons/fa6";
 import { IoHomeSharp, IoLogoWhatsapp } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
-import { Link,  useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function ProductsDetails() {
   const { id } = useParams();
-  const {user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   const [product, setProducts] = useState({});
   // console.log(product)
@@ -169,10 +169,9 @@ export default function ProductsDetails() {
 
   const handlePostReview = async (e) => {
     e.preventDefault();
-    if(user ){
-
-      if(!review){
-        return alert("select Review Number !!!")
+    if (user) {
+      if (!review) {
+        return alert("select Review Number !!!");
       }
 
       const form = e.target;
@@ -180,7 +179,7 @@ export default function ProductsDetails() {
       const message = form.message.value;
       const formData = { productId: id, review, userName, message };
       // console.log(formData);
-  
+
       await axios
         .post("http://localhost:5000/allReviews", formData)
         .then((res) => {
@@ -208,15 +207,11 @@ export default function ProductsDetails() {
             });
           }
         });
-  
+
       form.reset();
+    } else {
+      alert("please Login");
     }
-    else{
-      alert('please Login')
-    }
-
-
-  
   };
 
   // const navigate = useNavigate();
@@ -241,13 +236,27 @@ export default function ProductsDetails() {
 
   const [settingInfo, setSettingInfo] = useState([]);
   // console.log(settingInfo[0].phone)
+  const [reviews, setReviews] = useState([]);
 
+  console.log(reviews);
   useEffect(() => {
     axios.get("http://localhost:5000/site-settings").then((res) => {
       if (res?.data) setSettingInfo(res?.data);
     });
+
+    axios
+      .get("http://localhost:5000/allReviews")
+      .then((res) =>
+        setReviews(res?.data.filter((item) => item.productId == id))
+      );
   }, []);
 
+  const average = reviews?.reduce(
+    (pre, current) => pre + Number(current?.review),
+    0
+  );
+
+  console.log(average ? average / reviews?.length : "0");
 
   return (
     <div className="lg:w-[90%] w-[95%] mx-auto my-10">
@@ -271,7 +280,9 @@ export default function ProductsDetails() {
                 transformOrigin: `${position.x}% ${position.y}%`, // Move image center based on mouse position
               }}
             />
-            <span className="absolute top-2 left-0 rounded-tr-xl text-sm rounded-br-xl bg-primary text-white py-1 px-2 ">{product?.discount} %</span>
+            <span className="absolute top-2 left-0 rounded-tr-xl text-sm rounded-br-xl bg-primary text-white py-1 px-2 ">
+              {product?.discount} %
+            </span>
           </div>
         </div>
         {/* Products Information  */}
@@ -313,7 +324,7 @@ export default function ProductsDetails() {
                 <FaStar className="inline text-orange-500" />
               </div>
               <div>
-                4.90 (<span className="text-xs">145</span>)
+              {average ? average / reviews?.length : "0"} <span className="ml-1 text-xs"> ({reviews?.length})</span>
               </div>
             </h2>
           </div>
@@ -527,16 +538,26 @@ export default function ProductsDetails() {
       <div className="grid xl:grid-cols-3 sm:grid-cols-2 sm:gap-10 gap-5 my-10 items-center">
         <div className="">
           <div className="flex items-center">
-            <span className="text-4xl font-semibold mr-2">0</span>
+            <span className="text-4xl font-semibold mr-2">
+              {reviews ? reviews?.length : 0}
+            </span>
             <span className="bg-primary p-1 text-white rounded-br-xl rounded-tl-xl">
               Reviews
             </span>
           </div>
-          <div className="my-5">
-            <FaStar className="text-primary text-xl" />
+          <div className="my-5 flex items-center gap-2">
+            {average ? average / reviews?.length : "0"}
+            <span className="mr-2"> ({reviews?.length})</span>
+            <div className="flex items-center gap-1">
+              <FaStar className="text-primary text-xl" />
+              <FaStar className="text-primary text-xl" />
+              <FaStar className="text-primary text-xl" />
+              <FaStar className="text-primary text-xl" />
+              <FaStar className="text-primary text-xl" />
+            </div>
           </div>
           <div>
-            <span>0 reviews</span>
+            <span>{reviews ? reviews?.length : 0} reviews</span>
           </div>
         </div>
         <div className="">
@@ -710,6 +731,35 @@ export default function ProductsDetails() {
             </Modal.Body>
           </Modal>
         </div>
+      </div>
+      <div>
+        {reviews?.map((item, idx) => (
+          <div
+            className="flex items-start gap-5 border-2 p-3 rounded mb-2"
+            key={idx}
+          >
+            <div>
+              <h2 className="text-xl font-semibold">{item?.userName}</h2>
+              <div className="flex items-center my-2">
+                {/* <span className="mr-2 p-2 border-2 rounded-full min-h-10 min-w-10 flex justify-center items-center">{item?.review}</span> */}
+                {[...Array(5)].map((_, idx) => (
+                  <svg
+                    key={idx}
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`w-6 h-6 ${
+                      idx < item?.review ? "text-orange-500" : "text-gray-400"
+                    }`}
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                ))}
+              </div>
+              <p>{item?.message}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

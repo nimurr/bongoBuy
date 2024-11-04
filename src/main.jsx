@@ -17,7 +17,7 @@ import Register from "./Pages/Auth/Register.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 import ProfileDetails from "./Components/Profile/ProfileDetails.jsx";
 import CurrentOrder from "./Components/Profile/CurrentOrder.jsx";
-import PreviousOrder from "./Components/Profile/PreviousOrder.jsx";
+// import PreviousOrder from "./Components/Profile/PreviousOrder.jsx";
 import MyReviews from "./Components/Profile/MyReviews.jsx";
 import OrderInfo from "./Pages/Orders/OrderInfo";
 import Privetroute from "./PrivetRoute/PrivetRoute.jsx";

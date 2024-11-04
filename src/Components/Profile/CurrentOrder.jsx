@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Table } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 export default function CurrentOrder() {
@@ -15,6 +14,8 @@ export default function CurrentOrder() {
     });
   }, [user?.email]);
 
+  console.log(currentOrder);
+
   return (
     <div className="lg:p-0 p-5">
       <h2 className="text-xl font-bold text-primary">Current Order</h2>
@@ -25,7 +26,10 @@ export default function CurrentOrder() {
             <Table.HeadCell>Product Image</Table.HeadCell>
             <Table.HeadCell>Name</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
-            <Table.HeadCell className="text-center">Products Delivery</Table.HeadCell>
+            <Table.HeadCell>Quantity</Table.HeadCell>
+            <Table.HeadCell className="text-center">
+              Products Delivery
+            </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y dark:bg-white">
             {currentOrder.map((item, idx) => (
@@ -35,10 +39,23 @@ export default function CurrentOrder() {
               >
                 <Table.Cell className="min-w-32">{idx + 1}</Table.Cell>
                 <Table.Cell>
-                  <img className="w-20 min-w-20" src={item?.productImages} alt="" />
+                  <img
+                    className="w-20 min-w-20"
+                    src={item?.productImages}
+                    alt=""
+                  />
                 </Table.Cell>
-                <Table.Cell className="min-w-32">{item?.productName}</Table.Cell>
-                <Table.Cell className="min-w-32">{item?.productPrice} TK</Table.Cell>
+                <Table.Cell className="min-w-32">
+                  {item?.productName}
+                </Table.Cell>
+                <Table.Cell className="min-w-32">
+                  {item?.productPrice } TK
+                </Table.Cell>
+                {/* (deliveryCharge ? deliveryCharge : 60)) TK</Table.Cell> */}
+
+                <Table.Cell className="min-w-32">
+                  {item?.productQuantity}
+                </Table.Cell>
                 <Table.Cell>
                   <div
                     className={`
