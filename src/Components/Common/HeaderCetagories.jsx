@@ -23,7 +23,7 @@ export default function HeaderCatagories() {
     <div className="bg-primary py-3 text-sm">
       <div className="lg:w-[90%] w-[95%] mx-auto">
         <ul className=" text-white flex justify-center gap-10">
-          {/* <Link
+          <Link
             className="hover:underline duration-500 uppercase text-[17px]"
             to={"/categories/:id"}
           >
@@ -76,9 +76,9 @@ export default function HeaderCatagories() {
             to={"/categories/:id"}
           >
             Styles Panjabi
-          </Link> */}
+          </Link>
 
-          {categories?.map((item, id) => (
+          {/* {categories?.map((item, id) => (
             <a
               key={id}
               className="hover:underline duration-500 uppercase text-[17px]"
@@ -86,7 +86,7 @@ export default function HeaderCatagories() {
             >
               {item?.categoryName}
             </a>
-          ))}
+          ))} */}
         </ul>
       </div>
     </div>
