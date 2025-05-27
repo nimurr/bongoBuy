@@ -79,7 +79,7 @@ export default function CatagoriesItem() {
         className="mySwiper"
       >
         {categories.map((category, idx) => (
-          <SwiperSlide key={idx} className="h-auto w-full bg-primary !rouned-lg relative">
+          <SwiperSlide key={idx} className="h-auto w-full  !rouned-lg relative">
             <NavLink className={"p-5 w-full  !rounded-lg"} to={`/categories/${category.categoryName}`}>
               <img className="w-full " loading="lazy" src={category.uploadImage} alt={category.categoryName} />
               <div className="absolute bottom-2 w-full ">
