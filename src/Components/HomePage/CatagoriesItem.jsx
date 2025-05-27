@@ -16,31 +16,31 @@ export default function CatagoriesItem() {
   const demoCategories = [
     {
       categoryName: "Shirts",
-      uploadImage: "/public/Images/Categories/shirt.png",
+      uploadImage: "/Images/Categories/shirt.png",
     },
     {
       categoryName: "T-Shirts",
-      uploadImage: "/public/Images/Categories/t-shirt.png",
+      uploadImage: "/Images/Categories/t-shirt.png",
     },
     {
       categoryName: "Polo Shirts",
-      uploadImage: "/public/Images/Categories/polo-shirt.png",
+      uploadImage: "/Images/Categories/polo-shirt.png",
     },
     {
       categoryName: "Jursey",
-      uploadImage: "/public/Images/Categories/football-uniform.png",
+      uploadImage: "/Images/Categories/football-uniform.png",
     },
     {
       categoryName: "Pants",
-      uploadImage: "/public/Images/Categories/pants.png",
+      uploadImage: "/Images/Categories/pants.png",
     },
     {
       categoryName: "Panjabi",
-      uploadImage: "/public/Images/Categories/kurta.png",
+      uploadImage: "/Images/Categories/kurta.png",
     },
     {
       categoryName: "New Offers",
-      uploadImage: "/public/Images/Categories/new-offer.png",
+      uploadImage: "/Images/Categories/new-offer.png",
     },
   ];
 
