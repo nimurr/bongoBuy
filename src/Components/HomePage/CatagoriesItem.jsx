@@ -15,58 +15,72 @@ export default function CatagoriesItem() {
   // Demo data for categories
   const demoCategories = [
     {
+      id: 1,
       categoryName: "Shirts",
       uploadImage: "/Images/Categories/shirt.png",
     },
     {
+      id: 1,
       categoryName: "T-Shirts",
       uploadImage: "/Images/Categories/t-shirt.png",
     },
     {
+      id: 1,
       categoryName: "Polo Shirts",
       uploadImage: "/Images/Categories/polo-shirt.png",
     },
     {
+      id: 1,
       categoryName: "Jursey",
       uploadImage: "/Images/Categories/football-uniform.png",
     },
     {
+      id: 1,
       categoryName: "Pants",
       uploadImage: "/Images/Categories/pants.png",
     },
     {
+      id: 1,
       categoryName: "Panjabi",
       uploadImage: "/Images/Categories/kurta.png",
     },
     {
+      id: 1,
       categoryName: "New Offers",
       uploadImage: "/Images/Categories/new-offer.png",
     },
     {
+      id: 1,
       categoryName: "Shirts",
       uploadImage: "/Images/Categories/shirt.png",
     },
     {
+      id: 1,
       categoryName: "T-Shirts",
       uploadImage: "/Images/Categories/t-shirt.png",
     },
     {
+      id: 1,
       categoryName: "Polo Shirts",
       uploadImage: "/Images/Categories/polo-shirt.png",
     },
     {
+      id: 1,
       categoryName: "Jursey",
       uploadImage: "/Images/Categories/football-uniform.png",
     },
     {
+      id: 1,
       categoryName: "Pants",
       uploadImage: "/Images/Categories/pants.png",
     },
     {
+      id: 1,
       categoryName: "Panjabi",
       uploadImage: "/Images/Categories/kurta.png",
     },
     {
+      id: 1,
       categoryName: "New Offers",
       uploadImage: "/Images/Categories/new-offer.png",
     },
@@ -108,7 +122,7 @@ export default function CatagoriesItem() {
       >
         {categories.map((category, idx) => (
           <SwiperSlide key={idx} className="h-auto w-full p-5 relative">
-            <NavLink className={" w-full h-full "} to={`/categories/${category.categoryName}`}>
+            <NavLink className={" w-full h-full "} to={`/categories/${category.id}`}>
               <img className="w-3/4 mx-auto " loading="lazy" src={category.uploadImage} alt={category.categoryName} />
               <div className="absolute bottom-2 right-0  w-full ">
                 <span className="bg-primary text-white p-1 rounded text-sm font-semibold ">

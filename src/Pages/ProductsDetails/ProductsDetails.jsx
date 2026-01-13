@@ -265,23 +265,22 @@ export default function ProductsDetails() {
         {/* Products Images  */}
         <div>
           <div
-            className="relative w-auto h-auto overflow-hidden cursor-cell	"
+            className="relative w-auto h-auto overflow-hidden cursor-cell	overflow-hidden rounded-lg"
             onMouseMove={handleMouseMove}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
             <img
-              src={product?.uploadImages}
+              src={product?.uploadImages || 'https://bangladeshbiponee.com/wp-content/uploads/2022/09/Half-sleve-t-shirt-8-450x450.jpg'}
               alt="Zoomable"
-              className={`w-full h-full transition-transform duration-300 ease-in-out ${
-                zoom ? "scale-[2.5]" : "scale-100"
-              }`}
+              className={`w-full max-h-[500px] object-cover  transition-transform duration-300 ease-in-out ${zoom ? "scale-[2.5]" : "scale-100"
+                }`}
               style={{
                 transformOrigin: `${position.x}% ${position.y}%`, // Move image center based on mouse position
               }}
             />
             <span className="absolute top-2 left-0 rounded-tr-xl text-sm rounded-br-xl bg-primary text-white py-1 px-2 ">
-              {product?.discount} %
+              {product?.discount || 0} %
             </span>
           </div>
         </div>
@@ -296,12 +295,12 @@ export default function ProductsDetails() {
               className="hover:underline hover:text-primary duration-300 text-sm"
               to={`/categories/${product?.category}`}
             >
-              {product?.category}
+              {product?.category || "Not Item Found"}
             </Link>
           </div>
           <div className="my-5">
             <h2 className="text-xl font-bold">
-              {product?.name}
+              {product?.name || "Not Item Found"}
               {/* BUY 1 GET 1 FREE Sweatpant Trouser Offer */}
             </h2>
             <Link
@@ -324,19 +323,19 @@ export default function ProductsDetails() {
                 <FaStar className="inline text-orange-500" />
               </div>
               <div>
-              {average ? average / reviews?.length : "0"} <span className="ml-1 text-xs"> ({reviews?.length})</span>
+                {average ? average / reviews?.length : "0"} <span className="ml-1 text-xs"> ({reviews?.length})</span>
               </div>
             </h2>
           </div>
           <div>
             <h3 className="my-5">
               <span className="font-semibold">Code: </span>
-              {product?.pCode}
+              {product?.pCode || "Not Item Found"}
             </h3>
             <h3 className="my-5">
               <span className="font-semibold">Price:</span>{" "}
-              {(product?.rPrice * (1 - product?.discount / 100)).toFixed(2)}TK
-              <del className="text-gray-500 ml-2">{product?.rPrice}TK</del>
+              {(product?.rPrice * (1 - product?.discount / 100) || 0).toFixed(2)}TK
+              <del className="text-gray-500 ml-2">{product?.rPrice || "00"}TK</del>
             </h3>
             <h3 className="flex items-center gap-3 flex-wrap">
               <span className="font-semibold">Size:</span>
@@ -344,11 +343,10 @@ export default function ProductsDetails() {
                 {product?.sizes?.map((item, idx) => (
                   <label
                     key={idx}
-                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                      selectedSize === item
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                    }`}
+                    className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${selectedSize === item
+                      ? "bg-primary text-white border-primary"
+                      : "border-gray-400"
+                      }`}
                   >
                     <input
                       type="radio"
@@ -357,7 +355,7 @@ export default function ProductsDetails() {
                       onChange={handleSizeChange}
                       className="hidden"
                     />
-                    {item}
+                    {item || "L"}
                   </label>
                 ))}
               </div>
@@ -383,10 +381,9 @@ export default function ProductsDetails() {
               </div>
 
               <Link
-                to={`${
-                  selectedSize &&
+                to={`${selectedSize &&
                   `/orders/${id}?discountPrice=${discountPrice}&quantity=${quantity}&selectedSize=${selectedSize}`
-                }`} // Correctly formatted URL
+                  }`} // Correctly formatted URL
                 onClick={handleOrders}
                 className="py-[10px] px-10 bg-primary text-white rounded-md flex items-center gap-2"
               >
@@ -402,9 +399,8 @@ export default function ProductsDetails() {
               </button>
               <button
                 onClick={handleFavoriteClick}
-                className={`py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2 ${
-                  favorites.includes(id) ? "text-red-500" : ""
-                }`}
+                className={`py-[10px] text-sm px-6 border-2 border-gray-300 rounded flex items-center gap-2 ${favorites.includes(id) ? "text-red-500" : ""
+                  }`}
               >
                 <CiHeart
                   className={`cursor-pointer text-2xl hover:scale-105 `}
@@ -461,38 +457,35 @@ export default function ProductsDetails() {
       <div className="my-10">
         <div className="flex mb-4 bg-gray-300">
           <button
-            className={`${
-              activeTab === "profile"
-                ? "bg-primary text-white text-sm py-3"
-                : "text-gray-700 hover:bg-gray-200  text-sm py-3"
-            } px-4 py-2 `}
+            className={`${activeTab === "profile"
+              ? "bg-primary text-white text-sm py-3"
+              : "text-gray-700 hover:bg-gray-200  text-sm py-3"
+              } px-4 py-2 `}
             onClick={() => handleTabClick("profile")}
           >
             DESCRIPTION
           </button>
           <button
-            className={`${
-              activeTab === "dashboard"
-                ? "bg-primary text-white text-sm py-3"
-                : "text-gray-700 hover:bg-gray-200 text-sm py-3"
-            } px-4 py-2 `}
+            className={`${activeTab === "dashboard"
+              ? "bg-primary text-white text-sm py-3"
+              : "text-gray-700 hover:bg-gray-200 text-sm py-3"
+              } px-4 py-2 `}
             onClick={() => handleTabClick("dashboard")}
           >
             HOW TO BUY
           </button>
           <button
-            className={`${
-              activeTab === "settings"
-                ? "bg-primary text-white text-sm py-3"
-                : "text-gray-700 hover:bg-gray-200 text-sm py-3"
-            } px-4 py-2 `}
+            className={`${activeTab === "settings"
+              ? "bg-primary text-white text-sm py-3"
+              : "text-gray-700 hover:bg-gray-200 text-sm py-3"
+              } px-4 py-2 `}
             onClick={() => handleTabClick("settings")}
           >
             RETURN POLICY
           </button>
         </div>
         <div className="p-4 border border-gray-300 rounded">
-          {activeTab === "profile" && <div> {product?.description} </div>}
+          {activeTab === "profile" && <div> {product?.description || " No Description Available"} </div>}
           {activeTab === "dashboard" && (
             <div className="px-5">
               <ul>
@@ -574,20 +567,20 @@ export default function ProductsDetails() {
                         idx === 0
                           ? "text-black" // 1st line: all stars black
                           : idx === 1
-                          ? starIdx < 4
-                            ? "text-black"
-                            : "text-gray-500" // 2nd line: 4 black, 1 gray
-                          : idx === 2
-                          ? starIdx < 3
-                            ? "text-black"
-                            : "text-gray-500" // 3rd line: 3 black, 2 gray
-                          : idx === 3
-                          ? starIdx < 2
-                            ? "text-black"
-                            : "text-gray-500" // 4th line: 2 black, 3 gray
-                          : starIdx === 0
-                          ? "text-black"
-                          : "text-gray-500" // 5th line: 1 black, 4 gray
+                            ? starIdx < 4
+                              ? "text-black"
+                              : "text-gray-500" // 2nd line: 4 black, 1 gray
+                            : idx === 2
+                              ? starIdx < 3
+                                ? "text-black"
+                                : "text-gray-500" // 3rd line: 3 black, 2 gray
+                              : idx === 3
+                                ? starIdx < 2
+                                  ? "text-black"
+                                  : "text-gray-500" // 4th line: 2 black, 3 gray
+                                : starIdx === 0
+                                  ? "text-black"
+                                  : "text-gray-500" // 5th line: 1 black, 4 gray
                       }
                     />
                   </li>
@@ -623,11 +616,10 @@ export default function ProductsDetails() {
                   </span>
                   <div className="flex gap-2">
                     <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                        review === "5"
-                          ? "bg-primary text-white border-primary"
-                          : "border-gray-400"
-                      }`}
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "5"
+                        ? "bg-primary text-white border-primary"
+                        : "border-gray-400"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -640,11 +632,10 @@ export default function ProductsDetails() {
                     </label>
 
                     <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                        review === "4"
-                          ? "bg-primary text-white border-primary"
-                          : "border-gray-400"
-                      }`}
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "4"
+                        ? "bg-primary text-white border-primary"
+                        : "border-gray-400"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -656,11 +647,10 @@ export default function ProductsDetails() {
                       4
                     </label>
                     <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                        review === "3"
-                          ? "bg-primary text-white border-primary"
-                          : "border-gray-400"
-                      }`}
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "3"
+                        ? "bg-primary text-white border-primary"
+                        : "border-gray-400"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -672,11 +662,10 @@ export default function ProductsDetails() {
                       3
                     </label>
                     <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                        review === "2"
-                          ? "bg-primary text-white border-primary"
-                          : "border-gray-400"
-                      }`}
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "2"
+                        ? "bg-primary text-white border-primary"
+                        : "border-gray-400"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -688,11 +677,10 @@ export default function ProductsDetails() {
                       2
                     </label>
                     <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${
-                        review === "1"
-                          ? "bg-primary text-white border-primary"
-                          : "border-gray-400"
-                      }`}
+                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "1"
+                        ? "bg-primary text-white border-primary"
+                        : "border-gray-400"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -746,9 +734,8 @@ export default function ProductsDetails() {
                   <svg
                     key={idx}
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`w-6 h-6 ${
-                      idx < item?.review ? "text-orange-500" : "text-gray-400"
-                    }`}
+                    className={`w-6 h-6 ${idx < item?.review ? "text-orange-500" : "text-gray-400"
+                      }`}
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >

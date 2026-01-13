@@ -87,7 +87,7 @@ export default function HomePage() {
 
 
 
-      
+
       {[...Array(3)].map((_, idx) => (
         <div key={idx} className="my-10">
           <div className="flex justify-between items-center mb-3">
@@ -136,9 +136,8 @@ export default function HomePage() {
                         Order Now
                       </Link>
                       <FaRegHeart
-                        className={`text-primary cursor-pointer text-2xl hover:scale-105 ${
-                          favorites.includes(idx) ? "text-red-500" : ""
-                        }`}
+                        className={`text-primary cursor-pointer text-2xl hover:scale-105 ${favorites.includes(idx) ? "text-red-500" : ""
+                          }`}
                         onClick={() => handleFavoriteClick(idx)}
                       />
                     </div>
