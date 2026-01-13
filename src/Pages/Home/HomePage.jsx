@@ -83,7 +83,6 @@ export default function HomePage() {
       <ToastContainer />
       <HeroSection />
       <CatagoriesItem />
-
       <NewProducts data={"New Arrival Products"} />
 
 
@@ -115,7 +114,7 @@ export default function HomePage() {
                     <img
                       loading="lazy"
                       className="w-full h-auto object-cover rounded-t-md"
-                      src="https://images.othoba.com/images/thumbs/0660987_half-sleeve-t-shirt-soft-and-comfortable-fabric-just-do-it-a-round-neck-t-shirt-for-men-ideal-for-ef.jpeg"
+                      src="https://bangladeshbiponee.com/wp-content/uploads/2022/09/Half-sleve-t-shirt-8-450x450.jpg"
                       alt="Product Thumbnail"
                     />
                   </Link>

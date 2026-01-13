@@ -32,39 +32,60 @@ export default function NewProducts({ data }) {
   // DEMO PRODUCTS DATA
   const demoProducts = [
     {
-      _id: "1",
-      name: "Demo Product 1",
-      rPrice: 1000,
-      discount: 20,
-      uploadImages: "https://images.othoba.com/images/thumbs/0660987_half-sleeve-t-shirt-soft-and-comfortable-fabric-just-do-it-a-round-neck-t-shirt-for-men-ideal-for-ef.jpeg",
-    },
-    {
-      _id: "2",
-      name: "Demo Product 2",
-      rPrice: 1500,
-      discount: 10,
-      uploadImages: "https://i0.wp.com/www.pristineshop.com.bd/wp-content/uploads/2023/03/WhatsApp-Image-2023-03-22-at-12.04.54-PM-2.jpeg?resize=1600%2C1600&ssl=1",
-    },
-    {
-      _id: "3",
-      name: "Demo Product 3",
-      rPrice: 2000,
-      discount: 30,
-      uploadImages: "https://legacyboutiques.co/cdn/shop/files/mens-solid-color-t-shirt-legacy-boutiques-bangladesh-t-shirtsnavy-249460.png?v=1738828241",
-    },
-    {
       _id: "4",
       name: "Demo Product 4",
       rPrice: 1800,
       discount: 15,
-      uploadImages: "https://comfiq.com.bd/wp-content/uploads/2024/03/round-neck-2-scaled.webp",
+      uploadImages: "https://easyfashion.com.bd/wp-content/uploads/2025/10/3Y2A2048-Edit-scaled.webp",
     },
     {
       _id: "5",
       name: "Demo Product 5",
       rPrice: 1300,
       discount: 25,
-      uploadImages: "https://libas.shop/wp-content/uploads/2024/05/libas-t-shirt-3.jpg",
+      uploadImages: "https://bangladeshbiponee.com/wp-content/uploads/2022/09/Half-sleve-t-shirt-8-450x450.jpg",
+    },
+    {
+      _id: "4",
+      name: "Demo Product 4",
+      rPrice: 1800,
+      discount: 15,
+      uploadImages: "https://easyfashion.com.bd/wp-content/uploads/2025/10/3Y2A2048-Edit-scaled.webp",
+    },
+    {
+      _id: "5",
+      name: "Demo Product 5",
+      rPrice: 1300,
+      discount: 25,
+      uploadImages: "https://bangladeshbiponee.com/wp-content/uploads/2022/09/Half-sleve-t-shirt-8-450x450.jpg",
+    },
+    {
+      _id: "4",
+      name: "Demo Product 4",
+      rPrice: 1800,
+      discount: 15,
+      uploadImages: "https://easyfashion.com.bd/wp-content/uploads/2025/10/3Y2A2048-Edit-scaled.webp",
+    },
+    {
+      _id: "5",
+      name: "Demo Product 5",
+      rPrice: 1300,
+      discount: 25,
+      uploadImages: "https://bangladeshbiponee.com/wp-content/uploads/2022/09/Half-sleve-t-shirt-8-450x450.jpg",
+    },
+    {
+      _id: "4",
+      name: "Demo Product 4",
+      rPrice: 1800,
+      discount: 15,
+      uploadImages: "https://easyfashion.com.bd/wp-content/uploads/2025/10/3Y2A2048-Edit-scaled.webp",
+    },
+    {
+      _id: "5",
+      name: "Demo Product 5",
+      rPrice: 1300,
+      discount: 25,
+      uploadImages: "https://bangladeshbiponee.com/wp-content/uploads/2022/09/Half-sleve-t-shirt-8-450x450.jpg",
     },
   ];
 
@@ -77,8 +98,8 @@ export default function NewProducts({ data }) {
         slidesPerView={1}
         spaceBetween={10}
         autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
+          delay: 2000, // Delay in ms (2 seconds)
+          disableOnInteraction: false, // Keep autoplay running even after user interaction
         }}
         breakpoints={{
           340: {
@@ -105,7 +126,7 @@ export default function NewProducts({ data }) {
               <Link to={`/products/${item._id}`}>
                 <img
                   loading="lazy"
-                  className="w-full h-auto object-cover rounded-t-md"
+                  className="w-full !h-[250px] object-cover rounded-t-md"
                   src={item.uploadImages}
                   alt="Product Thumbnail"
                 />
@@ -129,9 +150,8 @@ export default function NewProducts({ data }) {
                     Order Now
                   </Link>
                   <FaRegHeart
-                    className={`text-primary cursor-pointer text-2xl hover:scale-105 ${
-                      favorites.includes(item._id) ? "text-red-500" : ""
-                    }`}
+                    className={`text-primary cursor-pointer text-2xl hover:scale-105 ${favorites.includes(item._id) ? "text-red-500" : ""
+                      }`}
                     onClick={() => handleFavoriteClick(item._id)}
                   />
                 </div>

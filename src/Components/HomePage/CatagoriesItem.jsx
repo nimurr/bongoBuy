@@ -42,6 +42,34 @@ export default function CatagoriesItem() {
       categoryName: "New Offers",
       uploadImage: "/Images/Categories/new-offer.png",
     },
+    {
+      categoryName: "Shirts",
+      uploadImage: "/Images/Categories/shirt.png",
+    },
+    {
+      categoryName: "T-Shirts",
+      uploadImage: "/Images/Categories/t-shirt.png",
+    },
+    {
+      categoryName: "Polo Shirts",
+      uploadImage: "/Images/Categories/polo-shirt.png",
+    },
+    {
+      categoryName: "Jursey",
+      uploadImage: "/Images/Categories/football-uniform.png",
+    },
+    {
+      categoryName: "Pants",
+      uploadImage: "/Images/Categories/pants.png",
+    },
+    {
+      categoryName: "Panjabi",
+      uploadImage: "/Images/Categories/kurta.png",
+    },
+    {
+      categoryName: "New Offers",
+      uploadImage: "/Images/Categories/new-offer.png",
+    },
   ];
 
   const [categories, setCategories] = useState([]);
@@ -80,9 +108,9 @@ export default function CatagoriesItem() {
       >
         {categories.map((category, idx) => (
           <SwiperSlide key={idx} className="h-auto w-full p-5 relative">
-            <NavLink className={" w-full "} to={`/categories/${category.categoryName}`}>
+            <NavLink className={" w-full h-full "} to={`/categories/${category.categoryName}`}>
               <img className="w-3/4 mx-auto " loading="lazy" src={category.uploadImage} alt={category.categoryName} />
-              <div className="absolute bottom-2 w-full ">
+              <div className="absolute bottom-2 right-0  w-full ">
                 <span className="bg-primary text-white p-1 rounded text-sm font-semibold ">
                   {category.categoryName}
                 </span>
