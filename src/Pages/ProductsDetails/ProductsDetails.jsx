@@ -265,7 +265,7 @@ export default function ProductsDetails() {
         {/* Products Images  */}
         <div>
           <div
-            className="relative w-auto h-auto overflow-hidden cursor-cell	overflow-hidden rounded-lg"
+            className="relative w-auto h-auto overflow-hidden cursor-cell rounded-lg"
             onMouseMove={handleMouseMove}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
