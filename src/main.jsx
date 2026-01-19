@@ -63,10 +63,9 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: (
-          <Privetroute>
-            {" "}
-            <Profile></Profile>
-          </Privetroute>
+          // <Privetroute> 
+          <Profile></Profile>
+          // </Privetroute>
         ),
         children: [
           {
@@ -80,7 +79,7 @@ const router = createBrowserRouter([
           {
             path: "/profile/current-order",
             element: <CurrentOrder></CurrentOrder>,
-          }, 
+          },
           {
             path: "/profile/my-reviews",
             element: <MyReviews></MyReviews>,
