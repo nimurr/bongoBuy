@@ -147,11 +147,11 @@ export default function FooterMain() {
 
           <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
             <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
-              © 2023 <a href="https://flowbite.com/">SopnerPesha™</a>. All
+              © 2023 <a href="https://flowbite.com/">ForTechbd™</a>. All
               Rights Reserved. Created By{" "}
-              <span className="font-bold text-primary dark:text-white">
+              <Link to={"https://www.facebook.com/NimurRahmanNerob"} className="font-bold text-primary dark:text-white">
                 Nimur Rahman Nerob
-              </span>
+              </Link>
             </span>
           </div>
         </div>

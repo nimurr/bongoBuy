@@ -57,12 +57,12 @@ export default function AddToCart() {
 
   return (
     <div className="my-10 lg:w-[90%] w-[95%] mx-auto">
-      <h2 className="text-center text-2xl font-semibold text-tColor">
+      <h2 className=" text-2xl font-semibold text-tColor">
         Add To Cart
       </h2>
       <div className="overflow-x-auto my-10">
         <Table className="dark:bg-white">
-          <Table.Head className="dark:text-primary">
+          <Table.Head className="dark:text-white">
             <Table.HeadCell>Product Image</Table.HeadCell>
             <Table.HeadCell>Name</Table.HeadCell>
             <Table.HeadCell>Discount Price</Table.HeadCell>

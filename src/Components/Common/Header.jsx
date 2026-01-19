@@ -116,11 +116,10 @@ export default function Header() {
     <div className="relative">
       <HeaderTop />
       <div
-        className={`w-full md:border-none border-primary border-b-2 ${
-          isSticky
+        className={`w-full md:border-none border-primary border-b-2 ${isSticky
             ? "fixed top-0 shadow-lg bg-white dark:bg-white"
             : "bg-white dark:bg-white z-10"
-        }`}
+          }`}
       >
         <Navbar
           fluid
@@ -138,10 +137,10 @@ export default function Header() {
           {!menu ? (
             <div className="flex  items-center gap-2 ">
               <IoSearch className="md:hidden text-2xl" onClick={clickMenu} />
-              <IoMenu
+              {/* <IoMenu
                 onClick={() => setIsOpen(true)}
                 className="md:hidden text-4xl"
-              />
+              /> */}
               <Drawer
                 className="md:hidden dark:bg-white w-56 text-sm dark:text-black"
                 open={isOpen}
@@ -168,7 +167,9 @@ export default function Header() {
               </Drawer>
             </div>
           ) : (
-            <RxCross1 className="md:hidden text-2xl" onClick={clickMenu} />
+            <div>
+              <RxCross1 className="md:hidden text-2xl" onClick={clickMenu} />
+            </div>
           )}
 
           <Navbar.Collapse className={`${menu ? "block" : "hidden "} relative`}>
@@ -214,7 +215,7 @@ export default function Header() {
                 <MdCall className="text-primary text-3xl rotate-[35deg]" />
                 <div>
                   <h2>Call Us Now:</h2>
-                  <h3>+88 {settingInfo[0]?.phone}</h3>
+                  <h3>+88 {settingInfo[0]?.phone || "0000000000"}</h3>
                 </div>
               </Link>
 
