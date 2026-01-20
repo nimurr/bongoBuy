@@ -606,7 +606,10 @@ export default function ProductsDetails() {
           <Modal
             dismissible
             show={openModal}
-            onClose={() => setOpenModal(false)}
+            onClose={() => {
+              setOpenModal(false);
+              setReview(0);
+            }}
             className="dark:bg-black"
           >
             <Modal.Header className="dark:bg-white dark:text-black">
