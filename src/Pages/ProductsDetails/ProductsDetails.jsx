@@ -161,10 +161,12 @@ export default function ProductsDetails() {
   //=========== review modal =============
   const [openModal, setOpenModal] = useState(false);
 
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState(0);
+
+  console.log(review)
 
   const handleReview = (event) => {
-    setReview(event.target.value);
+    setReview(event);
   };
 
   const handlePostReview = async (e) => {
@@ -605,116 +607,55 @@ export default function ProductsDetails() {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="dark:bg-black "
+            className="dark:bg-black"
           >
-            <Modal.Header className="dark:bg-white dark:text-black"></Modal.Header>
-            <Modal.Body className="dark:bg-white ">
-              <form onSubmit={handlePostReview} action="">
+            <Modal.Header className="dark:bg-white dark:text-black">
+              Leave a Review
+            </Modal.Header>
+
+            <Modal.Body className="dark:bg-white">
+              <form onSubmit={handlePostReview}>
                 <div className="space-y-6">
                   <span className="font-semibold flex items-center gap-2">
-                    Rating <FaStar className="text-orange-500" />
+                    Rating
                   </span>
-                  <div className="flex gap-2">
-                    <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "5"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        value="5"
-                        checked={review === "5"}
-                        onChange={handleReview}
-                        className="hidden"
-                      />
-                      5
-                    </label>
 
-                    <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "4"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        value="4"
-                        checked={review === "4"}
-                        onChange={handleReview}
-                        className="hidden"
-                      />
-                      4
-                    </label>
-                    <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "3"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        value="3"
-                        checked={review === "3"}
-                        onChange={handleReview}
-                        className="hidden"
-                      />
-                      3
-                    </label>
-                    <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "2"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        value="2"
-                        checked={review === "2"}
-                        onChange={handleReview}
-                        className="hidden"
-                      />
-                      2
-                    </label>
-                    <label
-                      className={`size-option border-2 p-4 w-12 h-12 flex justify-center items-center cursor-pointer rounded-lg transition ${review === "1"
-                        ? "bg-primary text-white border-primary"
-                        : "border-gray-400"
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        value="1"
-                        checked={review === "1"}
-                        onChange={handleReview}
-                        className="hidden"
-                      />
-                      1
-                    </label>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <label
+                        key={star}
+                        className={`cursor-pointer transition text-2xl ${review >= star ? "text-yellow-500" : "text-gray-400"
+                          }`}
+                        onClick={() => handleReview(star)}
+                      >
+                        <FaStar />
+                      </label>
+                    ))}
                   </div>
+
                   <input
-                    className="w-full border-2 border-gray-300"
+                    className="w-full border-2 border-gray-300 p-2 rounded"
                     type="text"
                     name="userName"
-                    placeholder="Name"
-                    id=""
+                    placeholder="Your Name"
                     required
                   />
+
                   <textarea
-                    className="w-full border-2 border-gray-300"
+                    className="w-full border-2 border-gray-300 p-2 rounded"
                     name="message"
                     placeholder="Your Message"
-                    id=""
+                    rows="4"
                     required
                   ></textarea>
+
+                  <button
+                    type="submit"
+                    className="py-2 px-5 mt-3 text-white rounded-sm bg-primary"
+                  >
+                    Submit Review
+                  </button>
                 </div>
-                <button
-                  type="submit"
-                  className="py-2 px-5 mt-3 text-white rounded-sm bg-primary"
-                  color="gray"
-                >
-                  Submit Review
-                </button>
               </form>
             </Modal.Body>
           </Modal>
