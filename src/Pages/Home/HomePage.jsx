@@ -9,6 +9,8 @@ import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 
 export default function HomePage() {
+
+
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
   );

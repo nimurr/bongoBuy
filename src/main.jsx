@@ -21,6 +21,8 @@ import CurrentOrder from "./Components/Profile/CurrentOrder.jsx";
 import MyReviews from "./Components/Profile/MyReviews.jsx";
 import OrderInfo from "./Pages/Orders/OrderInfo";
 import Privetroute from "./PrivetRoute/PrivetRoute.jsx";
+import store from "./redux/store/store.js";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter([
   {
@@ -101,7 +103,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </AuthProvider>
   </StrictMode>
 );
